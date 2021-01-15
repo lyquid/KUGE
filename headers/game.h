@@ -8,6 +8,7 @@
 #include "../include/cleanup.h"
 #include "../include/log.h"
 #include "../include/resources_path.h"
+#include "../include/sdl2_render_text.h"
 #include "../include/timer.h"
 
 #include <SDL.h>
