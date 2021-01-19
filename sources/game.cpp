@@ -50,8 +50,15 @@ bool Game::init() {
     return false;
   }
 
+  if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG) {
+  	ktp::logSDLError("IMG_Init");
+	  SDL_Quit();
+	  return false;
+  }
+
   if (TTF_Init() != 0) {
     ktp::logSDLError("TTF_Init");
+    IMG_Quit();
     SDL_Quit();
     return false;
   }
@@ -60,28 +67,29 @@ bool Game::init() {
   // main_window_ = SDL_CreateWindow("KUGE", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP);
   if (main_window_ == nullptr) {
 	  ktp::logSDLError("SDL_CreateWindow");
-    TTF_Quit();
-    SDL_Quit();
     return false;
 	}
 
   renderer_ = SDL_CreateRenderer(main_window_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
   if (renderer_ == nullptr) {
     ktp::logSDLError("SDL_CreateRenderer");
-    ktp::cleanup(main_window_);
-    TTF_Quit();
-    SDL_Quit();
     return false;
   }
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
   SDL_RenderSetLogicalSize(renderer_, kSCREEN_SIZE_.x, kSCREEN_SIZE_.y);
 
-  font_ = TTF_OpenFont((ktp::getResourcesPath() + "fonts/Future n0t Found.ttf").c_str(), 18u);
+  font_ = TTF_OpenFont((ktp::getResourcesPath() + "fonts/Future n0t Found.ttf").c_str(), 32);
   if (font_ == nullptr) {
     ktp::logSDLError("TTF_OpenFont");
-    ktp::cleanup(renderer_, main_window_);
-    TTF_Quit();
-    SDL_Quit();
+    return false;
+  }
+  
+  texture_jpg_.setRenderer(renderer_);
+  if (!texture_jpg_.loadFromFile(ktp::getResourcesPath() + "images/im_jpg.jpg")) {
+    return false;
+  }
+  texture_png_.setRenderer(renderer_);
+  if (!texture_png_.loadFromFile(ktp::getResourcesPath() + "images/im_png.png")) {
     return false;
   }
 
@@ -90,8 +98,10 @@ bool Game::init() {
 }
 
 void Game::render() {
-  SDL_SetRenderDrawColor(renderer_, 0x00, 0x00, 0x40, 0x00);
+  SDL_SetRenderDrawColor(renderer_, 0x00, 0x00, 0xFF, 0x00);
   SDL_RenderClear(renderer_);
+  texture_jpg_.render({0, 0});
+  texture_png_.render({texture_jpg_.getWidth(), 0});
   SDL_RenderPresent(renderer_);
 }
 
@@ -104,9 +114,9 @@ void Game::update() {
 }
 
 void Game::clean() {
-  //event_bus_.postEvent(kuge::EventTypes::StartedCleanup);
   ktp::cleanup(renderer_, main_window_, font_);
   TTF_Quit();
+  IMG_Quit();
 	SDL_Quit();
-  //event_bus_.postEvent(kuge::EventTypes::FinishedCleanup);
+  std::cout << "clean()\n";
 }

@@ -17,7 +17,7 @@ the font with the given color. This results in a surface with alpha transparency
 solid colored box around the text. The text is antialiased. This will render slower than Solid, but in 
 about the same time as Shaded mode. The resulting surface will blit slower than if you had used Solid or Shaded. 
 Use this when you want high quality, and the text isn't changing too fast. */
-inline static SDL_Texture* renderTextBlended(const std::string& message, TTF_Font* font,
+static SDL_Texture* renderTextBlended(const std::string& message, TTF_Font* font,
 	                                                      SDL_Color color, SDL_Renderer* renderer) {
   
   auto surface = TTF_RenderText_Blended(font, message.c_str(), color);
@@ -45,7 +45,7 @@ background color. This results in a box of the background color around the text 
 The text is antialiased. This will render slower than Solid, but in about the same time as Blended mode. 
 The resulting surface should blit as fast as Solid, once it is made. Use this when you need nice text, and can live with a box. */
 inline static SDL_Texture* renderTextShaded(const std::string& message, TTF_Font* font,
-	                                                   SDL_Color fg_color, SDL_Color bg_color, SDL_Renderer* renderer) {
+	                                                  SDL_Color fg_color, SDL_Color bg_color, SDL_Renderer* renderer) {
   
   auto surface = TTF_RenderText_Shaded(font, message.c_str(), fg_color, bg_color);
 	if (surface == nullptr) {
@@ -92,6 +92,24 @@ inline static SDL_Texture* renderTextSolid(const std::string& message, TTF_Font*
 	
   cleanup(surface);
 	return texture;
+}
+
+/**
+* Draw an SDL_Texture to an SDL_Renderer at position x, y, preserving
+* the texture's width and height
+* @param tex The source texture we want to draw
+* @param ren The renderer we want to draw to
+* @param x The x coordinate to draw to
+* @param y The y coordinate to draw to
+*/
+static void renderTexture(SDL_Texture* tex, SDL_Renderer* ren, int x, int y){
+	SDL_Rect dst;
+	dst.x = x;
+	dst.y = y;
+
+	//Query the texture to get its width and height to use
+	SDL_QueryTexture(tex, NULL, NULL, &dst.w, &dst.h);
+	SDL_RenderCopy(ren, tex, NULL, &dst);
 }
 
 } // namespace ktp

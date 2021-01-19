@@ -30,10 +30,11 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="H:/GRUPOS/ACREDITACIONES/TRABAJADORES_CA/ALEX/PrOG/lib/MinGW/SDL2-2.0.14/x86_64-w64-mingw32/include/SDL2" />
+			<Add directory="H:/GRUPOS/ACREDITACIONES/TRABAJADORES_CA/ALEX/PrOG/lib/MinGW/SDL2-2.0.14/i686-w64-mingw32/include/SDL2" />
 		</Compiler>
 		<Linker>
-			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf" />
+			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf" />
+			<Add directory="H:/GRUPOS/ACREDITACIONES/TRABAJADORES_CA/ALEX/PrOG/lib/MinGW/SDL2-2.0.14/i686-w64-mingw32/lib" />
 			<Add directory="H:/GRUPOS/ACREDITACIONES/TRABAJADORES_CA/ALEX/PrOG/lib/MinGW/SDL2-2.0.14/x86_64-w64-mingw32/lib" />
 		</Linker>
 		<Unit filename="headers/event.h" />

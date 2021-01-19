@@ -4,14 +4,15 @@
 #include "./event_bus.h"
 #include "./input_system.h"
 #include "./output_system.h"
-
+#include "./sdl2_wrappers.h"
 #include "../include/cleanup.h"
 #include "../include/log.h"
 #include "../include/resources_path.h"
-#include "../include/sdl2_render_text.h"
+#include "../include/sdl2_render.h"
 #include "../include/timer.h"
 
 #include <SDL.h>
+#include <SDL_image.h>
 #include <SDL_ttf.h>
 
 class Game {
@@ -38,6 +39,9 @@ class Game {
   TTF_Font*     font_;
   SDL_Window*   main_window_;
   SDL_Renderer* renderer_;
+
+  ktp::SDL2_Texture texture_jpg_;
+  ktp::SDL2_Texture texture_png_;
 
   kuge::EventBus   event_bus_;
 
