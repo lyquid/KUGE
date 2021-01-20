@@ -178,6 +178,15 @@
     <ClInclude Include="headers\sdl2_wrappers.h" />
     <ClInclude Include="headers\system.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\images\im_jpg.jpg" />
+    <Image Include="resources\images\im_png.png" />
+    <Image Include="resources\images\im_tiff.tif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resources\fonts\BERNHC.TTF" />
+    <Font Include="resources\fonts\Future n0t Found.ttf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
