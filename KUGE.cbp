@@ -43,6 +43,7 @@
 		<Unit filename="headers/game.h" />
 		<Unit filename="headers/input_system.h" />
 		<Unit filename="headers/output_system.h" />
+		<Unit filename="headers/sdl2_wrappers.h" />
 		<Unit filename="headers/system.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="sources/event.cpp" />
@@ -50,6 +51,7 @@
 		<Unit filename="sources/game.cpp" />
 		<Unit filename="sources/input_system.cpp" />
 		<Unit filename="sources/output_system.cpp" />
+		<Unit filename="sources/sdl2_wrappers.cpp" />
 		<Unit filename="sources/system.cpp" />
 		<Extensions />
 	</Project>

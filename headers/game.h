@@ -8,7 +8,6 @@
 #include "../include/cleanup.h"
 #include "../include/log.h"
 #include "../include/resources_path.h"
-#include "../include/sdl2_render.h"
 #include "../include/timer.h"
 
 #include <SDL.h>
@@ -42,6 +41,9 @@ class Game {
 
   ktp::SDL2_Texture texture_jpg_;
   ktp::SDL2_Texture texture_png_;
+  ktp::SDL2_Texture texture_text_blended_;
+  ktp::SDL2_Texture texture_text_shaded_;
+  ktp::SDL2_Texture texture_text_solid_;
 
   kuge::EventBus   event_bus_;
 

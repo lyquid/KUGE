@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\ketep\source\repos\KUGE\build\CMakeFiles\c853f53127077c8245777888814f9922\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{18B1DF96-05A8-37A7-9160-F35169004800}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

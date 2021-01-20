@@ -36,6 +36,9 @@
     <ClCompile Include="sources\input_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sources\sdl2_wrappers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\system.h">
@@ -57,6 +60,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\event_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\sdl2_wrappers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
