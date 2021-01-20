@@ -6,13 +6,13 @@ ktp::SDL2_Font::SDL2_Font():
   font_(nullptr) {}
 
 void ktp::SDL2_Font::free() {
-  if (font_ != nullptr) {
+  if (font_ != nullptr && TTF_WasInit()) {
     TTF_CloseFont(font_);
     font_ = nullptr;
   }
 }
 
-bool ktp::SDL2_Font::load(const std::string& path, int size) {
+bool ktp::SDL2_Font::loadFont(const std::string& path, int size) {
   free();
   font_ = TTF_OpenFont(path.c_str(), size);
   if (font_ == nullptr) {
@@ -167,9 +167,3 @@ void ktp::SDL2_Timer::stop() {
 }
 
 /* end class SDL2_Timer */
-
-/* class SDL2_Font */
-
-
-
-/* end class SDL2_Font */

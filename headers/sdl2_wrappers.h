@@ -51,7 +51,7 @@ class SDL2_Font {
   SDL2_Font();
   ~SDL2_Font() { free(); }
   TTF_Font* getFont() const { return font_; }
-  bool load(const std::string& path, int size);
+  bool loadFont(const std::string& path, int size);
 
  private:
   void free();

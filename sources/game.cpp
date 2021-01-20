@@ -55,8 +55,8 @@ bool Game::init() {
 	  SDL_Quit();
 	  return false;
   }
-
-  if (TTF_Init() != 0) {
+  
+  if (!TTF_WasInit() && TTF_Init() != 0) {
     ktp::logSDLError("TTF_Init");
     IMG_Quit();
     SDL_Quit();
@@ -78,7 +78,7 @@ bool Game::init() {
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
   SDL_RenderSetLogicalSize(renderer_, kSCREEN_SIZE_.x, kSCREEN_SIZE_.y);
 
-  if (!font_.load((ktp::getResourcesPath() + "fonts/Future n0t Found.ttf").c_str(), 32)) {
+  if (!font_.loadFont(ktp::getResourcesPath() + "fonts/Future n0t Found.ttf", 72)) {
     return false;
   }
   
@@ -95,8 +95,14 @@ bool Game::init() {
   if (!texture_text_blended_.loadFromTextBlended(font_, "blended", kFONT_COLOR_)) {
     return false;
   }
+  if (!font_.loadFont(ktp::getResourcesPath() + "fonts/BERNHC.TTF", 92)) {
+    return false;
+  }
   texture_text_shaded_.setRenderer(renderer_);
   if (!texture_text_shaded_.loadFromTextShaded(font_, "shaded", kFONT_COLOR_, {50,255,20,255})) {
+    return false;
+  }
+  if (!font_.loadFont(ktp::getResourcesPath() + "fonts/Future n0t Found.ttf", 72)) {
     return false;
   }
   texture_text_solid_.setRenderer(renderer_);
@@ -115,7 +121,7 @@ void Game::render() {
   texture_png_.render({texture_jpg_.getWidth(), 0});
   texture_text_blended_.render({texture_png_.getWidth() * 2, 0});
   texture_text_shaded_.render({texture_png_.getWidth() * 2, texture_text_blended_.getHeight()});
-  texture_text_solid_.render({texture_png_.getWidth() * 2, texture_text_blended_.getHeight() * 2});
+  texture_text_solid_.render({texture_png_.getWidth() * 2, texture_text_blended_.getHeight() +texture_text_shaded_.getHeight()});
   SDL_RenderPresent(renderer_);
 }
 
