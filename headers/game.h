@@ -7,7 +7,6 @@
 #include "./sdl2_wrappers.h"
 #include "../include/cleanup.h"
 #include "../include/resources_path.h"
-#include "../include/timer.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -32,11 +31,11 @@ class Game {
   const SDL_Color kFONT_COLOR_;
   const SDL_Point kSCREEN_SIZE_;
 
-  ktp::Timer    clock_;
-  SDL_Event     sdl_event_;
-  TTF_Font*     font_;
-  SDL_Window*   main_window_;
-  SDL_Renderer* renderer_;
+  ktp::SDL2_Timer clock_;
+  SDL_Event       sdl_event_;
+  TTF_Font*       font_;
+  SDL_Window*     main_window_;
+  SDL_Renderer*   renderer_;
 
   ktp::SDL2_Texture texture_jpg_;
   ktp::SDL2_Texture texture_png_;

@@ -1,5 +1,6 @@
 #include "../headers/sdl2_wrappers.h"
 
+/* class SDL2_Texture */
 ktp::SDL2_Texture::SDL2_Texture():
   texture_(nullptr),
   renderer_(nullptr),
@@ -68,7 +69,7 @@ void ktp::SDL2_Texture::render(const SDL_Point& where) {
   SDL_RenderCopy(renderer_, texture_, NULL, &dest);
 }
 
-/* PRIVATE METHODS */
+/* SDL2_Texture PRIVATE METHODS */
 
 void ktp::SDL2_Texture::createTextureFromSurface(SDL_Surface& surface) {
   texture_ = SDL_CreateTextureFromSurface(renderer_, &surface);
@@ -79,3 +80,65 @@ void ktp::SDL2_Texture::createTextureFromSurface(SDL_Surface& surface) {
     width_ = surface.w;
   }
 }
+
+/* end class SDL2_Texture */
+
+
+/* class SDL2_Timer */
+
+ktp::SDL2_Timer::SDL2_Timer():
+  paused_ticks_(0u),
+  start_ticks_(0u),
+  paused_(false),
+  started_(false) {}
+
+Uint32 ktp::SDL2_Timer::getTicks() {
+  Uint32 time = 0;
+  if (started_) {
+    if (paused_) {
+      time = paused_ticks_;
+    } else {
+      time = SDL_GetTicks() - start_ticks_;
+    }
+  }
+  return time;
+}
+
+void ktp::SDL2_Timer::pause() {
+  if (started_ && !paused_) {
+    paused_ = true;
+    paused_ticks_ = SDL_GetTicks() - start_ticks_;
+    start_ticks_ = 0u;
+  }
+}
+
+void ktp::SDL2_Timer::resume() {
+  if (started_ && paused_) {
+    paused_ = false;
+    start_ticks_ = SDL_GetTicks() - paused_ticks_;
+    paused_ticks_ = 0u;
+  }
+}
+
+float ktp::SDL2_Timer::restart() {
+  auto time = getTicks();
+  stop();
+  start();
+  return static_cast<float>(time);
+}
+
+void ktp::SDL2_Timer::start() {
+  started_ = true;
+  paused_ = false;
+  start_ticks_ = SDL_GetTicks();
+  paused_ticks_ = 0u;
+}
+
+void ktp::SDL2_Timer::stop() {
+  started_ = false;
+  paused_ = false;
+  start_ticks_ = 0u;
+  paused_ticks_ = 0u;
+}
+
+/* end class SDL2_Timer */

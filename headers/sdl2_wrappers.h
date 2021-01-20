@@ -100,6 +100,27 @@ class SDL2_Texture {
   int width_;
 }; // end class SDL2_Texture
 
+
+class SDL2_Timer {
+ public:
+  SDL2_Timer();
+
+  bool isPaused() { return started_ && paused_; }
+  bool isStarted() { return started_; }
+  Uint32 getTicks();
+  void pause();
+  void resume();
+  float restart();
+  void start();
+  void stop();
+
+ private: 
+  Uint32 paused_ticks_;
+  Uint32 start_ticks_;
+  bool paused_;
+  bool started_;
+}; // end class SDK2_Timer
+
 } // end namespace ktp
 
 #endif // KTP_SDL2_WRAPPERS_H_
