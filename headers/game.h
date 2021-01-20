@@ -33,7 +33,7 @@ class Game {
 
   ktp::SDL2_Timer clock_;
   SDL_Event       sdl_event_;
-  TTF_Font*       font_;
+  ktp::SDL2_Font  font_;
   SDL_Window*     main_window_;
   SDL_Renderer*   renderer_;
 

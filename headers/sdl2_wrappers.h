@@ -46,13 +46,23 @@ static void logSDLError(std::ostream& os, const std::string& msg){
 	os << msg << " error: " << SDL_GetError() << '\n';
 }
 
+class SDL2_Font {
+ public:
+  SDL2_Font();
+  ~SDL2_Font() { free(); }
+  TTF_Font* getFont() const { return font_; }
+  bool load(const std::string& path, int size);
+
+ private:
+  void free();
+  TTF_Font* font_;
+};
 
 class SDL2_Texture {
  public:
   SDL2_Texture();
   ~SDL2_Texture() { free(); }
 
-  void free();
   int getHeight() const { return height_; }
   int getWidth() const { return width_; }
   SDL_Point getSize() const { return {width_, height_}; }
@@ -65,7 +75,7 @@ class SDL2_Texture {
   solid colored box around the text. The text is antialiased. This will render slower than Solid, but in 
   about the same time as Shaded mode. The resulting surface will blit slower than if you had used Solid or Shaded. 
   Use this when you want high quality, and the text isn't changing too fast. */
-  bool loadFromTextBlended(TTF_Font& font, const std::string& text, const SDL_Color& color);
+  bool loadFromTextBlended(const SDL2_Font& font, const std::string& text, const SDL_Color& color);
 
   /* 
   Slow and Nice, but with a Solid Box
@@ -74,7 +84,7 @@ class SDL2_Texture {
   background color. This results in a box of the background color around the text in the foreground color. 
   The text is antialiased. This will render slower than Solid, but in about the same time as Blended mode. 
   The resulting surface should blit as fast as Solid, once it is made. Use this when you need nice text, and can live with a box. */
-  bool loadFromTextShaded(TTF_Font& font, const std::string& text, const SDL_Color& fg_color, const SDL_Color& bg_color);
+  bool loadFromTextShaded(const SDL2_Font& font, const std::string& text, const SDL_Color& fg_color, const SDL_Color& bg_color);
 
   /* 
   Quick and Dirty
@@ -86,13 +96,14 @@ class SDL2_Texture {
   This is the fastest rendering speed of all the rendering modes. This results in no box around the text, but the 
   text is not as smooth. The resulting surface should blit faster than the Blended one. Use this mode for FPS and 
   other fast changing updating text displays. */
-  bool loadFromTextSolid(TTF_Font& font, const std::string& text, const SDL_Color& color);
+  bool loadFromTextSolid(const SDL2_Font& font, const std::string& text, const SDL_Color& color);
 
   void render(const SDL_Point& where);
   void setRenderer(SDL_Renderer* ren) { renderer_ = ren; }
 
  private:
   void createTextureFromSurface(SDL_Surface& surface);
+  void free();
 
   SDL_Texture* texture_;
   SDL_Renderer* renderer_;

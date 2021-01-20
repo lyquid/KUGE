@@ -6,7 +6,7 @@ Game::Game():
   kSCREEN_SIZE_({1024u, 768u}),
   clock_(),
   sdl_event_(), 
-  font_(nullptr),
+  font_(),
   main_window_(nullptr),
   renderer_(nullptr),
   input_sys_(event_bus_),
@@ -78,9 +78,7 @@ bool Game::init() {
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
   SDL_RenderSetLogicalSize(renderer_, kSCREEN_SIZE_.x, kSCREEN_SIZE_.y);
 
-  font_ = TTF_OpenFont((ktp::getResourcesPath() + "fonts/Future n0t Found.ttf").c_str(), 32);
-  if (font_ == nullptr) {
-    ktp::logSDLError("TTF_OpenFont");
+  if (!font_.load((ktp::getResourcesPath() + "fonts/Future n0t Found.ttf").c_str(), 32)) {
     return false;
   }
   
@@ -94,15 +92,15 @@ bool Game::init() {
   } 
 
   texture_text_blended_.setRenderer(renderer_);
-  if (!texture_text_blended_.loadFromTextBlended(*font_, "blended", kFONT_COLOR_)) {
+  if (!texture_text_blended_.loadFromTextBlended(font_, "blended", kFONT_COLOR_)) {
     return false;
   }
   texture_text_shaded_.setRenderer(renderer_);
-  if (!texture_text_shaded_.loadFromTextShaded(*font_, "shaded", kFONT_COLOR_, {50,255,20,255})) {
+  if (!texture_text_shaded_.loadFromTextShaded(font_, "shaded", kFONT_COLOR_, {50,255,20,255})) {
     return false;
   }
   texture_text_solid_.setRenderer(renderer_);
-  if (!texture_text_solid_.loadFromTextSolid(*font_, "solid", kFONT_COLOR_)) {
+  if (!texture_text_solid_.loadFromTextSolid(font_, "solid", kFONT_COLOR_)) {
     return false;
   }
 
@@ -130,7 +128,7 @@ void Game::update() {
 }
 
 void Game::clean() {
-  ktp::cleanup(renderer_, main_window_, font_);
+  ktp::cleanup(renderer_, main_window_);
   TTF_Quit();
   IMG_Quit();
 	SDL_Quit();
