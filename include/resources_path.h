@@ -1,7 +1,7 @@
 #ifndef KUGE_INCLUDE_RESOURCES_PATH_H
 #define KUGE_INCLUDE_RESOURCES_PATH_H
 
-#include "log.h"
+#include "../headers/sdl2_wrappers.h"
 #include <SDL.h>
 #include <string>
 

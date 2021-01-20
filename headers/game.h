@@ -6,7 +6,6 @@
 #include "./output_system.h"
 #include "./sdl2_wrappers.h"
 #include "../include/cleanup.h"
-#include "../include/log.h"
 #include "../include/resources_path.h"
 #include "../include/timer.h"
 
