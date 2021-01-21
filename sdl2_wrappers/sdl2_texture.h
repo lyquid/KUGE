@@ -1,77 +1,15 @@
-#ifndef KTP_SDL2_WRAPPERS_H_
-#define KTP_SDL2_WRAPPERS_H_
+#ifndef KTP_SDL2_WRAPPERS_SDL2_TEXTURE_H_
+#define KTP_SDL2_WRAPPERS_SDL2_TEXTURE_H_
+
+#include "./sdl2_font.h"
+#include "./sdl2_log.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
-#include <SDL_mixer.h>
 #include <SDL_ttf.h>
-#include <iostream>
 #include <string>
 
 namespace ktp {
-
-/* Original loggers idea from Will Usher */
-/* Check it here: https://github.com/Twinklebear/TwinklebearDev-Lessons */
-
-/**
-* Log a message to the standard output stream.
-* @param msg The message to write, format will be msg + '\n'.
-*/
-static void logMessage(const std::string& msg) {
-  std::cout << msg << '\n';
-}
-
-/**
-* Log a message to the output stream of our choice.
-* @param os The output stream to write the message to.
-* @param msg The message to write, format will be msg + '\n'.
-*/
-static void logMessage(std::ostream& os, const std::string& msg) {
-  os << msg << '\n';
-}
-
-/**
-* Log an SDL error with some error message to the standard output stream.
-* @param msg The error message to write, format will be msg error: SDL_GetError() + '\n'.
-*/
-static void logSDLError(const std::string& msg){
-	std::cerr << msg << " error: " << SDL_GetError() << '\n';
-}
-
-/**
-* Log an SDL error with some error message to the output stream of our choice.
-* @param os The output stream to write the message to.
-* @param msg The error message to write, format will be msg error: SDL_GetError() + '\n'.
-*/
-static void logSDLError(std::ostream& os, const std::string& msg){
-	os << msg << " error: " << SDL_GetError() << '\n';
-}
-
-class SDL2_Font {
- public:
-  SDL2_Font();
-  ~SDL2_Font() { free(); }
-  TTF_Font* getFont() const { return font_; }
-  bool loadFont(const std::string& path, int size);
-
- private:
-  void free();
-  TTF_Font* font_;
-};
-
-class SDL2_Music {
- public:
-  SDL2_Music();
-  ~SDL2_Music() { free(); }
-  bool loadMusic(const std::string& path);
-  void play(int loops = -1);
-
-  // static bool mixIsPlayingMusic();
-
- private:
-  void free();
-  Mix_Music* music_;
-};
 
 class SDL2_Texture {
  public:
@@ -124,29 +62,8 @@ class SDL2_Texture {
   SDL_Renderer* renderer_;
   int height_;
   int width_;
-}; // end class SDL2_Texture
-
-
-class SDL2_Timer {
- public:
-  SDL2_Timer();
-
-  bool isPaused() { return started_ && paused_; }
-  bool isStarted() { return started_; }
-  Uint32 getTicks();
-  void pause();
-  void resume();
-  float restart();
-  void start();
-  void stop();
-
- private: 
-  Uint32 paused_ticks_;
-  Uint32 start_ticks_;
-  bool paused_;
-  bool started_;
-}; // end class SDK2_Timer
+};
 
 } // end namespace ktp
 
-#endif // KTP_SDL2_WRAPPERS_H_
+#endif // KTP_SDL2_WRAPPERS_SDL2_TEXTURE_H_

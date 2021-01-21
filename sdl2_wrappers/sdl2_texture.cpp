@@ -1,59 +1,4 @@
-#include "../headers/sdl2_wrappers.h"
-
-/* class SDL2_Font */
-
-ktp::SDL2_Font::SDL2_Font():
-  font_(nullptr) {}
-
-void ktp::SDL2_Font::free() {
-  if (font_ != nullptr && TTF_WasInit()) {
-    TTF_CloseFont(font_);
-    font_ = nullptr;
-  }
-}
-
-bool ktp::SDL2_Font::loadFont(const std::string& path, int size) {
-  free();
-  font_ = TTF_OpenFont(path.c_str(), size);
-  if (font_ == nullptr) {
-    ktp::logSDLError("TTF_OpenFont");
-  }
-  return font_ != nullptr;
-}
-
-/* end class SDL2_Font */
-
-
-/* class SDL2_Music */
-
-ktp::SDL2_Music::SDL2_Music():
-  music_(nullptr) {}
-
-void ktp::SDL2_Music::free() {
-  if (music_ != nullptr) {
-    Mix_FreeMusic(music_);
-    music_ = nullptr;
-  }
-}
-
-bool ktp::SDL2_Music::loadMusic(const std::string& path) {
-  free();
-  music_ = Mix_LoadMUS(path.c_str());
-  if (music_ == nullptr) {
-    ktp::logSDLError("Mix_LoadMUS");
-    return false;
-  }
-  return true;
-}
-
-void ktp::SDL2_Music::play(int loops) {
-  Mix_PlayMusic(music_, loops);
-}
-
-/* end class SDL2_Music */
-
-
-/* class SDL2_Texture */
+#include "./sdl2_texture.h"
 
 ktp::SDL2_Texture::SDL2_Texture():
   texture_(nullptr),
@@ -123,8 +68,6 @@ void ktp::SDL2_Texture::render(const SDL_Point& where) {
   SDL_RenderCopy(renderer_, texture_, NULL, &dest);
 }
 
-/* SDL2_Texture PRIVATE METHODS */
-
 void ktp::SDL2_Texture::createTextureFromSurface(SDL_Surface& surface) {
   texture_ = SDL_CreateTextureFromSurface(renderer_, &surface);
   if (texture_ == nullptr) {
@@ -134,65 +77,3 @@ void ktp::SDL2_Texture::createTextureFromSurface(SDL_Surface& surface) {
     width_ = surface.w;
   }
 }
-
-/* end class SDL2_Texture */
-
-
-/* class SDL2_Timer */
-
-ktp::SDL2_Timer::SDL2_Timer():
-  paused_ticks_(0u),
-  start_ticks_(0u),
-  paused_(false),
-  started_(false) {}
-
-Uint32 ktp::SDL2_Timer::getTicks() {
-  Uint32 time = 0;
-  if (started_) {
-    if (paused_) {
-      time = paused_ticks_;
-    } else {
-      time = SDL_GetTicks() - start_ticks_;
-    }
-  }
-  return time;
-}
-
-void ktp::SDL2_Timer::pause() {
-  if (started_ && !paused_) {
-    paused_ = true;
-    paused_ticks_ = SDL_GetTicks() - start_ticks_;
-    start_ticks_ = 0u;
-  }
-}
-
-void ktp::SDL2_Timer::resume() {
-  if (started_ && paused_) {
-    paused_ = false;
-    start_ticks_ = SDL_GetTicks() - paused_ticks_;
-    paused_ticks_ = 0u;
-  }
-}
-
-float ktp::SDL2_Timer::restart() {
-  auto time = getTicks();
-  stop();
-  start();
-  return static_cast<float>(time);
-}
-
-void ktp::SDL2_Timer::start() {
-  started_ = true;
-  paused_ = false;
-  start_ticks_ = SDL_GetTicks();
-  paused_ticks_ = 0u;
-}
-
-void ktp::SDL2_Timer::stop() {
-  started_ = false;
-  paused_ = false;
-  start_ticks_ = 0u;
-  paused_ticks_ = 0u;
-}
-
-/* end class SDL2_Timer */

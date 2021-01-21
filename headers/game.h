@@ -4,14 +4,12 @@
 #include "./event_bus.h"
 #include "./input_system.h"
 #include "./output_system.h"
-#include "./sdl2_wrappers.h"
+#include "../sdl2_wrappers/sdl2_wrappers.h"
 #include "../include/cleanup.h"
 #include "../include/resources_path.h"
 
 #include <SDL.h>
-#include <SDL_image.h>
 #include <SDL_mixer.h>
-#include <SDL_ttf.h>
 
 class Game {
  public:
@@ -38,7 +36,6 @@ class Game {
   SDL_Window*     main_window_;
   SDL_Renderer*   renderer_;
 
-  //Mix_Music* music_ = nullptr;
   ktp::SDL2_Music music_;
 
   ktp::SDL2_Texture texture_jpg_;
