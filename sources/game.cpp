@@ -4,9 +4,6 @@ Game::Game():
   quit_(false),
   kFONT_COLOR_({0xFF, 0x00, 0x00, 0xFF}),
   kSCREEN_SIZE_({1024u, 768u}),
-  clock_(),
-  sdl_event_(), 
-  font_(),
   main_window_(nullptr),
   renderer_(nullptr),
   input_sys_(event_bus_),
@@ -38,6 +35,31 @@ void Game::handleSDLKeyEvents(const SDL_Keycode& key) {
       break;
     case SDLK_SPACE:
       break;
+    case SDLK_9:
+      //If there is no music playing
+      if(Mix_PlayingMusic() == 0) {
+        //Play the music
+        //Mix_PlayMusic(music_, -1);
+        music_.play();
+      }
+      //If music is being played
+      else {
+        //If the music is paused
+        if(Mix_PausedMusic() == 1) {
+          //Resume the music
+          Mix_ResumeMusic();
+        }
+        //If the music is playing
+        else {
+          //Pause the music
+          Mix_PauseMusic();
+        }
+      }
+      break;
+      case SDLK_0:
+        //Stop the music
+        Mix_HaltMusic();
+      break;
     default:
       break;
   }
@@ -58,6 +80,25 @@ bool Game::init() {
   
   if (!TTF_WasInit() && TTF_Init() != 0) {
     ktp::logSDLError("TTF_Init");
+    IMG_Quit();
+    SDL_Quit();
+    return false;
+  }
+
+  constexpr auto audio_flags = MIX_INIT_OGG | MIX_INIT_MOD;
+  const auto initted = Mix_Init(audio_flags);
+  if ((initted & audio_flags) != audio_flags) {
+    ktp::logSDLError("Mix_Init");
+    TTF_Quit();
+    IMG_Quit();
+    SDL_Quit();
+    return false;
+  }
+
+  if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+    ktp::logSDLError("Mix_OpenAudio");
+    while (Mix_Init(0)) Mix_Quit();
+    TTF_Quit();
     IMG_Quit();
     SDL_Quit();
     return false;
@@ -110,6 +151,18 @@ bool Game::init() {
     return false;
   }
 
+  /* music_ = Mix_LoadMUS((ktp::getResourcesPath() + "audio/Hotline.ogg").c_str());
+  if (music_ == nullptr) {
+    ktp::logSDLError("Mix_LoadMUS");
+    return false;
+  }
+ */
+  
+  if (!music_.loadMusic(ktp::getResourcesPath() + "audio/Hotline.ogg")) {
+    return false;
+  }
+
+
   event_bus_.postEvent(kuge::EventTypes::InitSuccessfull);
   return true;
 }
@@ -121,7 +174,7 @@ void Game::render() {
   texture_png_.render({texture_jpg_.getWidth(), 0});
   texture_text_blended_.render({texture_png_.getWidth() * 2, 0});
   texture_text_shaded_.render({texture_png_.getWidth() * 2, texture_text_blended_.getHeight()});
-  texture_text_solid_.render({texture_png_.getWidth() * 2, texture_text_blended_.getHeight() +texture_text_shaded_.getHeight()});
+  texture_text_solid_.render({texture_png_.getWidth() * 2, texture_text_blended_.getHeight() + texture_text_shaded_.getHeight()});
   SDL_RenderPresent(renderer_);
 }
 
@@ -135,6 +188,8 @@ void Game::update() {
 
 void Game::clean() {
   ktp::cleanup(renderer_, main_window_);
+  Mix_CloseAudio();
+  while (Mix_Init(0)) Mix_Quit();
   TTF_Quit();
   IMG_Quit();
 	SDL_Quit();

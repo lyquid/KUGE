@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <SDL_ttf.h>
 #include <iostream>
 #include <string>
@@ -56,6 +57,20 @@ class SDL2_Font {
  private:
   void free();
   TTF_Font* font_;
+};
+
+class SDL2_Music {
+ public:
+  SDL2_Music();
+  ~SDL2_Music() { free(); }
+  bool loadMusic(const std::string& path);
+  void play(int loops = -1);
+
+  // static bool mixIsPlayingMusic();
+
+ private:
+  void free();
+  Mix_Music* music_;
 };
 
 class SDL2_Texture {

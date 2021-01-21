@@ -24,6 +24,35 @@ bool ktp::SDL2_Font::loadFont(const std::string& path, int size) {
 /* end class SDL2_Font */
 
 
+/* class SDL2_Music */
+
+ktp::SDL2_Music::SDL2_Music():
+  music_(nullptr) {}
+
+void ktp::SDL2_Music::free() {
+  if (music_ != nullptr) {
+    Mix_FreeMusic(music_);
+    music_ = nullptr;
+  }
+}
+
+bool ktp::SDL2_Music::loadMusic(const std::string& path) {
+  free();
+  music_ = Mix_LoadMUS(path.c_str());
+  if (music_ == nullptr) {
+    ktp::logSDLError("Mix_LoadMUS");
+    return false;
+  }
+  return true;
+}
+
+void ktp::SDL2_Music::play(int loops) {
+  Mix_PlayMusic(music_, loops);
+}
+
+/* end class SDL2_Music */
+
+
 /* class SDL2_Texture */
 
 ktp::SDL2_Texture::SDL2_Texture():

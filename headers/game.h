@@ -10,6 +10,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <SDL_ttf.h>
 
 class Game {
@@ -36,6 +37,9 @@ class Game {
   ktp::SDL2_Font  font_;
   SDL_Window*     main_window_;
   SDL_Renderer*   renderer_;
+
+  //Mix_Music* music_ = nullptr;
+  ktp::SDL2_Music music_;
 
   ktp::SDL2_Texture texture_jpg_;
   ktp::SDL2_Texture texture_png_;
