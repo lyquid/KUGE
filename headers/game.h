@@ -26,6 +26,7 @@ class Game {
 
  private:
   void clean();
+  bool initSDL2();
   
   const SDL_Color kFONT_COLOR_;
   const SDL_Point kSCREEN_SIZE_;
@@ -44,7 +45,7 @@ class Game {
   ktp::SDL2_Texture texture_text_shaded_;
   ktp::SDL2_Texture texture_text_solid_;
 
-  kuge::EventBus   event_bus_;
+  kuge::EventBus event_bus_;
 
   kuge::InputSystem  input_sys_;
   kuge::OutputSystem output_sys_;

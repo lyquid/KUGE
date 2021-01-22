@@ -43,15 +43,23 @@
 		<Unit filename="headers/game.h" />
 		<Unit filename="headers/input_system.h" />
 		<Unit filename="headers/output_system.h" />
-		<Unit filename="headers/sdl2_wrappers.h" />
 		<Unit filename="headers/system.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="sdl2_wrappers/sdl2_font.cpp" />
+		<Unit filename="sdl2_wrappers/sdl2_font.h" />
+		<Unit filename="sdl2_wrappers/sdl2_log.h" />
+		<Unit filename="sdl2_wrappers/sdl2_music.cpp" />
+		<Unit filename="sdl2_wrappers/sdl2_music.h" />
+		<Unit filename="sdl2_wrappers/sdl2_texture.cpp" />
+		<Unit filename="sdl2_wrappers/sdl2_texture.h" />
+		<Unit filename="sdl2_wrappers/sdl2_timer.cpp" />
+		<Unit filename="sdl2_wrappers/sdl2_timer.h" />
+		<Unit filename="sdl2_wrappers/sdl2_wrappers.h" />
 		<Unit filename="sources/event.cpp" />
 		<Unit filename="sources/event_bus.cpp" />
 		<Unit filename="sources/game.cpp" />
 		<Unit filename="sources/input_system.cpp" />
 		<Unit filename="sources/output_system.cpp" />
-		<Unit filename="sources/sdl2_wrappers.cpp" />
 		<Unit filename="sources/system.cpp" />
 		<Extensions />
 	</Project>

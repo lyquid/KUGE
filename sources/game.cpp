@@ -37,28 +37,27 @@ void Game::handleSDLKeyEvents(const SDL_Keycode& key) {
       break;
     case SDLK_9:
       //If there is no music playing
-      if(Mix_PlayingMusic() == 0) {
+      if (!ktp::SDL2_Music::isPlayingMusic()) {
         //Play the music
-        //Mix_PlayMusic(music_, -1);
         music_.play();
       }
       //If music is being played
       else {
         //If the music is paused
-        if(Mix_PausedMusic() == 1) {
+        if (ktp::SDL2_Music::isMusicPaused()) {
           //Resume the music
-          Mix_ResumeMusic();
+          ktp::SDL2_Music::resumeMusic();
         }
         //If the music is playing
         else {
           //Pause the music
-          Mix_PauseMusic();
+          ktp::SDL2_Music::pauseMusic();
         }
       }
       break;
       case SDLK_0:
         //Stop the music
-        Mix_HaltMusic();
+        ktp::SDL2_Music::stopMusic();
       break;
     default:
       break;
@@ -67,43 +66,8 @@ void Game::handleSDLKeyEvents(const SDL_Keycode& key) {
 
 bool Game::init() {
 
-  if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-    ktp::logSDLError("SDL_Init");
-    return false;
-  }
-
-  if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG) {
-  	ktp::logSDLError("IMG_Init");
-	  SDL_Quit();
-	  return false;
-  }
+  if (!initSDL2()) return false;
   
-  if (!TTF_WasInit() && TTF_Init() != 0) {
-    ktp::logSDLError("TTF_Init");
-    IMG_Quit();
-    SDL_Quit();
-    return false;
-  }
-
-  constexpr auto audio_flags = MIX_INIT_OGG | MIX_INIT_MOD;
-  const auto initted = Mix_Init(audio_flags);
-  if ((initted & audio_flags) != audio_flags) {
-    ktp::logSDLError("Mix_Init");
-    TTF_Quit();
-    IMG_Quit();
-    SDL_Quit();
-    return false;
-  }
-
-  if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
-    ktp::logSDLError("Mix_OpenAudio");
-    while (Mix_Init(0)) Mix_Quit();
-    TTF_Quit();
-    IMG_Quit();
-    SDL_Quit();
-    return false;
-  }
-
   main_window_ = SDL_CreateWindow("KUGE", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, kSCREEN_SIZE_.x, kSCREEN_SIZE_.y, SDL_WINDOW_SHOWN);
   // main_window_ = SDL_CreateWindow("KUGE", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP);
   if (main_window_ == nullptr) {
@@ -131,7 +95,6 @@ bool Game::init() {
   if (!texture_png_.loadFromFile(ktp::getResourcesPath() + "images/im_png.png")) {
     return false;
   } 
-
   texture_text_blended_.setRenderer(renderer_);
   if (!texture_text_blended_.loadFromTextBlended(font_, "blended", kFONT_COLOR_)) {
     return false;
@@ -151,19 +114,27 @@ bool Game::init() {
     return false;
   }
 
-  /* music_ = Mix_LoadMUS((ktp::getResourcesPath() + "audio/Hotline.ogg").c_str());
-  if (music_ == nullptr) {
-    ktp::logSDLError("Mix_LoadMUS");
-    return false;
-  }
- */
-  
-  if (!music_.loadMusic(ktp::getResourcesPath() + "audio/Hotline.ogg")) {
-    return false;
-  }
-
+  if (!music_.loadMusic(ktp::getResourcesPath() + "audio/Hotline.ogg")) return false;
 
   event_bus_.postEvent(kuge::EventTypes::InitSuccessfull);
+  return true;
+}
+
+bool Game::initSDL2() {
+  if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+    ktp::logSDLError("SDL_Init");
+    return false;
+  }
+  if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG) {
+  	ktp::logSDLError("IMG_Init");
+	  return false;
+  }
+  if (!TTF_WasInit() && TTF_Init() != 0) {
+    ktp::logSDLError("TTF_Init");
+    return false;
+  }
+  if (!ktp::SDL2_Music::initMixer()) return false;
+
   return true;
 }
 
@@ -179,18 +150,14 @@ void Game::render() {
 }
 
 void Game::update() {
-
   const float delta_time = clock_.restart() / 1000.f;
-
   event_bus_.processEvents();
- 
 }
 
 void Game::clean() {
   ktp::cleanup(renderer_, main_window_);
-  Mix_CloseAudio();
-  while (Mix_Init(0)) Mix_Quit();
-  TTF_Quit();
+  ktp::SDL2_Music::closeMixer();
+  if (TTF_WasInit()) TTF_Quit();
   IMG_Quit();
 	SDL_Quit();
   std::cout << "clean()\n";
