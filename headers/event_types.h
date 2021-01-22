@@ -9,10 +9,13 @@ namespace kuge {
 enum class EventTypes {
   ExitGame,
   FinishedCleanup,
+  GameCleaned,
   GameInit,
   KeyPressed,
   ResourcesLoaded,
-  SDL2Initialized,
+  SDL2_Initialized,
+  SDL2_MainWindowCreated,
+  SDL2_RenderCreated,
   StartedCleanup,
   count,
 };
@@ -20,13 +23,16 @@ enum class EventTypes {
 // https://stackoverflow.com/questions/65670462/elegant-way-to-ensure-a-stdmap-has-a-concrete-size-in-compilation-time
 
 static const std::map<EventTypes, std::string>::value_type kEventTypesNamesData[] = {
-  { EventTypes::ExitGame,        "ExitGame" },
-  { EventTypes::FinishedCleanup, "FinishedCleanup" },
-  { EventTypes::GameInit,        "GameInit" },
-  { EventTypes::KeyPressed,      "KeyPressed" },
-  { EventTypes::ResourcesLoaded, "ResourcesLoaded" },
-  { EventTypes::SDL2Initialized, "SDL2Initialized" },
-  { EventTypes::StartedCleanup,  "StartedCleanup" }
+  { EventTypes::ExitGame,               "ExitGame" },
+  { EventTypes::FinishedCleanup,        "FinishedCleanup" },
+  { EventTypes::GameCleaned,            "GameCleaned" },
+  { EventTypes::GameInit,               "GameInit" },
+  { EventTypes::KeyPressed,             "KeyPressed" },
+  { EventTypes::ResourcesLoaded,        "ResourcesLoaded" },
+  { EventTypes::SDL2_Initialized,       "SDL2_Initialized" },
+  { EventTypes::SDL2_MainWindowCreated, "SDL2_MainWindowCreated" },
+  { EventTypes::SDL2_RenderCreated,     "SDL2_RenderCreated" },
+  { EventTypes::StartedCleanup,         "StartedCleanup" }
 };
 
 // Compile-time size check

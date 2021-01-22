@@ -15,12 +15,12 @@ void Game::handleSDLEvents() {
   while (SDL_PollEvent(&sdl_event_)) {
     switch (sdl_event_.type) {
       case SDL_QUIT:
+        input_sys_.postEvent(kuge::EventTypes::ExitGame);
         quit_ = true;
-        input_sys_.postEvent(kuge::EventTypes::ExitGame, "bb...");
         break;
       case SDL_KEYDOWN:
+        input_sys_.postEvent(kuge::EventTypes::KeyPressed, SDL_GetKeyName(sdl_event_.key.keysym.sym));
         handleSDLKeyEvents(sdl_event_.key.keysym.sym);
-        input_sys_.postEvent(kuge::EventTypes::KeyPressed, 345.7);
         break;
       default:
         break;
@@ -31,6 +31,7 @@ void Game::handleSDLEvents() {
 void Game::handleSDLKeyEvents(const SDL_Keycode& key) {
   switch (key) {
     case SDLK_ESCAPE:
+      input_sys_.postEvent(kuge::EventTypes::ExitGame);
       quit_ = true;
       break;
     case SDLK_SPACE:
@@ -74,6 +75,7 @@ bool Game::init() {
 	  ktp::logSDLError("SDL_CreateWindow");
     return false;
 	}
+  event_bus_.postEvent(kuge::EventTypes::SDL2_MainWindowCreated);
 
   renderer_ = SDL_CreateRenderer(main_window_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
   if (renderer_ == nullptr) {
@@ -82,6 +84,7 @@ bool Game::init() {
   }
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
   SDL_RenderSetLogicalSize(renderer_, kSCREEN_SIZE_.x, kSCREEN_SIZE_.y);
+  event_bus_.postEvent(kuge::EventTypes::SDL2_RenderCreated);
 
   if (!loadResources()) return false;
 
@@ -104,7 +107,7 @@ bool Game::initSDL2() {
   }
   if (!ktp::SDL2_Music::initMixer()) return false;
 
-  event_bus_.postEvent(kuge::EventTypes::SDL2Initialized);
+  event_bus_.postEvent(kuge::EventTypes::SDL2_Initialized);
   return true;
 }
 
@@ -169,5 +172,5 @@ void Game::clean() {
   if (TTF_WasInit()) TTF_Quit();
   IMG_Quit();
 	SDL_Quit();
-  std::cout << "clean()\n";
+  event_bus_.postEvent(kuge::EventTypes::GameCleaned);
 }
