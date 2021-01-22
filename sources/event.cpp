@@ -1,24 +1,24 @@
 #include "../headers/event.h"
 
-kuge::Event::Event(kuge::EventTypes type): 
+kuge::Event::Event(kuge::EventTypes type):
   kMessage_(std::string()),
   kName_(kuge::kEventTypesNames.at(type)),
   kType_(type), 
-  kValue_(NULL) {}
+  kValue_(NAN) {}
 
-kuge::Event::Event(kuge::EventTypes type, float value): 
+kuge::Event::Event(kuge::EventTypes type, float value):
   kMessage_(std::string()),
   kName_(kuge::kEventTypesNames.at(type)),
   kType_(type), 
   kValue_(value) {}
 
-kuge::Event::Event(kuge::EventTypes type, const std::string& msg): 
+kuge::Event::Event(kuge::EventTypes type, const std::string& msg):
   kMessage_(msg),
   kName_(kuge::kEventTypesNames.at(type)),
   kType_(type),
-  kValue_(NULL) {}
+  kValue_(NAN) {}
 
-kuge::Event::Event(kuge::EventTypes type, float value, const std::string& msg): 
+kuge::Event::Event(kuge::EventTypes type, float value, const std::string& msg):
   kMessage_(msg),
   kName_(kuge::kEventTypesNames.at(type)),
   kType_(type),
@@ -31,7 +31,7 @@ std::ostream& kuge::operator<<(std::ostream& os, const kuge::Event& event) {
      << event.kName_
      << '(';
 
-  if (event.kValue_ != NULL) {                // value
+  if (!std::isnan(event.kValue_)) {           // value 
     os << event.kValue_;
     if (!event.kMessage_.empty()) {           // both
       os << ", \"" << event.kMessage_ << "\"";

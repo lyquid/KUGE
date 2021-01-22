@@ -2,6 +2,7 @@
 #define KUGE_HEADERS_EVENT_H_
 
 #include "./event_types.h"
+#include <cmath>
 #include <iostream>
 #include <string>
 
