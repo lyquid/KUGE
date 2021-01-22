@@ -36,7 +36,16 @@
     <ClCompile Include="sources\input_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sources\sdl2_wrappers.cpp">
+    <ClCompile Include="sdl2_wrappers\sdl2_font.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl2_wrappers\sdl2_music.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl2_wrappers\sdl2_texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl2_wrappers\sdl2_timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,7 +71,22 @@
     <ClInclude Include="headers\event_types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\sdl2_wrappers.h">
+    <ClInclude Include="sdl2_wrappers\sdl2_font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl2_wrappers\sdl2_log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl2_wrappers\sdl2_music.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl2_wrappers\sdl2_texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl2_wrappers\sdl2_timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl2_wrappers\sdl2_wrappers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

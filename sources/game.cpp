@@ -151,7 +151,7 @@ bool Game::loadResources() {
 }
 
 void Game::render() {
-  SDL_SetRenderDrawColor(renderer_, 0x00, 0x00, 0xFF, 0x00);
+  // SDL_SetRenderDrawColor(renderer_, 0x00, 0x00, 0xFF, 0x00);
   SDL_RenderClear(renderer_);
   texture_jpg_.render({0, 0});
   texture_png_.render({texture_jpg_.getWidth(), 0});
