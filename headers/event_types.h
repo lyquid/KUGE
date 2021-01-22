@@ -7,22 +7,26 @@
 namespace kuge {
 
 enum class EventTypes {
-  InitSuccessfull,
-  KeyPressed,
-  StartedCleanup,
-  FinishedCleanup,
   ExitGame,
+  FinishedCleanup,
+  GameInit,
+  KeyPressed,
+  ResourcesLoaded,
+  SDL2Initialized,
+  StartedCleanup,
   count,
 };
 
 // https://stackoverflow.com/questions/65670462/elegant-way-to-ensure-a-stdmap-has-a-concrete-size-in-compilation-time
 
 static const std::map<EventTypes, std::string>::value_type kEventTypesNamesData[] = {
-  { EventTypes::InitSuccessfull, "InitSuccessfull" },
-  { EventTypes::KeyPressed,      "KeyPressed" },
-  { EventTypes::StartedCleanup,  "StartedCleanup" },
+  { EventTypes::ExitGame,        "ExitGame" },
   { EventTypes::FinishedCleanup, "FinishedCleanup" },
-  { EventTypes::ExitGame,        "ExitGame" }
+  { EventTypes::GameInit,        "GameInit" },
+  { EventTypes::KeyPressed,      "KeyPressed" },
+  { EventTypes::ResourcesLoaded, "ResourcesLoaded" },
+  { EventTypes::SDL2Initialized, "SDL2Initialized" },
+  { EventTypes::StartedCleanup,  "StartedCleanup" }
 };
 
 // Compile-time size check

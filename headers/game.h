@@ -27,6 +27,7 @@ class Game {
  private:
   void clean();
   bool initSDL2();
+  bool loadResources();
   
   const SDL_Color kFONT_COLOR_;
   const SDL_Point kSCREEN_SIZE_;

@@ -83,10 +83,37 @@ bool Game::init() {
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
   SDL_RenderSetLogicalSize(renderer_, kSCREEN_SIZE_.x, kSCREEN_SIZE_.y);
 
+  if (!loadResources()) return false;
+
+  event_bus_.postEvent(kuge::EventTypes::GameInit);
+  return true;
+}
+
+bool Game::initSDL2() {
+  if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+    ktp::logSDLError("SDL_Init");
+    return false;
+  }
+  if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG) {
+  	ktp::logSDLError("IMG_Init");
+	  return false;
+  }
+  if (!TTF_WasInit() && TTF_Init() != 0) {
+    ktp::logSDLError("TTF_Init");
+    return false;
+  }
+  if (!ktp::SDL2_Music::initMixer()) return false;
+
+  event_bus_.postEvent(kuge::EventTypes::SDL2Initialized);
+  return true;
+}
+
+bool Game::loadResources() {
+  // fonts
   if (!font_.loadFont(ktp::getResourcesPath() + "fonts/Future n0t Found.ttf", 72)) {
     return false;
   }
-  
+  // textures
   texture_jpg_.setRenderer(renderer_);
   if (!texture_jpg_.loadFromFile(ktp::getResourcesPath() + "images/im_jpg.jpg")) {
     return false;
@@ -113,28 +140,10 @@ bool Game::init() {
   if (!texture_text_solid_.loadFromTextSolid(font_, "solid", kFONT_COLOR_)) {
     return false;
   }
-
+  // sounds
   if (!music_.loadMusic(ktp::getResourcesPath() + "audio/Hotline.ogg")) return false;
 
-  event_bus_.postEvent(kuge::EventTypes::InitSuccessfull);
-  return true;
-}
-
-bool Game::initSDL2() {
-  if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-    ktp::logSDLError("SDL_Init");
-    return false;
-  }
-  if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG) {
-  	ktp::logSDLError("IMG_Init");
-	  return false;
-  }
-  if (!TTF_WasInit() && TTF_Init() != 0) {
-    ktp::logSDLError("TTF_Init");
-    return false;
-  }
-  if (!ktp::SDL2_Music::initMixer()) return false;
-
+  event_bus_.postEvent(kuge::EventTypes::ResourcesLoaded);
   return true;
 }
 
