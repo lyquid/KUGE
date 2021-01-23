@@ -162,8 +162,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="sdl2_wrappers\sdl2_font.cpp" />
     <ClCompile Include="sdl2_wrappers\sdl2_music.cpp" />
+    <ClCompile Include="sdl2_wrappers\sdl2_renderer.cpp" />
     <ClCompile Include="sdl2_wrappers\sdl2_texture.cpp" />
     <ClCompile Include="sdl2_wrappers\sdl2_timer.cpp" />
+    <ClCompile Include="sdl2_wrappers\sdl2_window.cpp" />
     <ClCompile Include="sources\event.cpp" />
     <ClCompile Include="sources\event_bus.cpp" />
     <ClCompile Include="sources\game.cpp" />
@@ -182,8 +184,10 @@
     <ClInclude Include="sdl2_wrappers\sdl2_font.h" />
     <ClInclude Include="sdl2_wrappers\sdl2_log.h" />
     <ClInclude Include="sdl2_wrappers\sdl2_music.h" />
+    <ClInclude Include="sdl2_wrappers\sdl2_renderer.h" />
     <ClInclude Include="sdl2_wrappers\sdl2_texture.h" />
     <ClInclude Include="sdl2_wrappers\sdl2_timer.h" />
+    <ClInclude Include="sdl2_wrappers\sdl2_window.h" />
     <ClInclude Include="sdl2_wrappers\sdl2_wrappers.h" />
   </ItemGroup>
   <ItemGroup>

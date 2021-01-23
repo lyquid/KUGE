@@ -5,11 +5,9 @@
 #include "./input_system.h"
 #include "./output_system.h"
 #include "../sdl2_wrappers/sdl2_wrappers.h"
-#include "../include/cleanup.h"
 #include "../include/resources_path.h"
 
 #include <SDL.h>
-#include <SDL_mixer.h>
 
 class Game {
  public:
@@ -35,8 +33,8 @@ class Game {
   ktp::SDL2_Timer clock_;
   SDL_Event       sdl_event_;
   ktp::SDL2_Font  font_;
-  SDL_Window*     main_window_;
-  SDL_Renderer*   renderer_;
+  ktp::SDL2_Window main_window_;
+  ktp::SDL2_Renderer renderer_;
 
   ktp::SDL2_Music music_;
 

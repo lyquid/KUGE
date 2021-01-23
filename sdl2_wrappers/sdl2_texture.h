@@ -3,6 +3,7 @@
 
 #include "./sdl2_font.h"
 #include "./sdl2_log.h"
+#include "./sdl2_renderer.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -52,14 +53,14 @@ class SDL2_Texture {
   bool loadFromTextSolid(const SDL2_Font& font, const std::string& text, const SDL_Color& color);
 
   void render(const SDL_Point& where);
-  void setRenderer(SDL_Renderer* ren) { renderer_ = ren; }
+  void setRenderer(SDL2_Renderer& ren) { renderer_ = &ren; }
 
  private:
   void createTextureFromSurface(SDL_Surface& surface);
   void free();
 
   SDL_Texture* texture_;
-  SDL_Renderer* renderer_;
+  SDL2_Renderer* renderer_;
   int height_;
   int width_;
 };

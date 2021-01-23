@@ -65,11 +65,11 @@ bool ktp::SDL2_Texture::loadFromTextSolid(const ktp::SDL2_Font& font, const std:
 
 void ktp::SDL2_Texture::render(const SDL_Point& where) {
   const SDL_Rect dest = {where.x, where.y, width_, height_};
-  SDL_RenderCopy(renderer_, texture_, NULL, &dest);
+  SDL_RenderCopy(renderer_->getRenderer(), texture_, NULL, &dest);
 }
 
 void ktp::SDL2_Texture::createTextureFromSurface(SDL_Surface& surface) {
-  texture_ = SDL_CreateTextureFromSurface(renderer_, &surface);
+  texture_ = SDL_CreateTextureFromSurface(renderer_->getRenderer(), &surface);
   if (texture_ == nullptr) {
     ktp::logSDLError("SDL_CreateTextureFromSurface");
   } else {

@@ -4,8 +4,6 @@ Game::Game():
   quit_(false),
   kFONT_COLOR_({0xFF, 0x00, 0x00, 0xFF}),
   kSCREEN_SIZE_({1024u, 768u}),
-  main_window_(nullptr),
-  renderer_(nullptr),
   input_sys_(event_bus_),
   output_sys_(event_bus_) { 
     event_bus_.setSystems(input_sys_, output_sys_);
@@ -37,28 +35,20 @@ void Game::handleSDLKeyEvents(const SDL_Keycode& key) {
     case SDLK_SPACE:
       break;
     case SDLK_9:
-      //If there is no music playing
       if (!ktp::SDL2_Music::isPlayingMusic()) {
-        //Play the music
         music_.play();
       }
-      //If music is being played
       else {
-        //If the music is paused
         if (ktp::SDL2_Music::isMusicPaused()) {
-          //Resume the music
           ktp::SDL2_Music::resumeMusic();
         }
-        //If the music is playing
         else {
-          //Pause the music
           ktp::SDL2_Music::pauseMusic();
         }
       }
       break;
-      case SDLK_0:
-        //Stop the music
-        ktp::SDL2_Music::stopMusic();
+    case SDLK_0:
+      ktp::SDL2_Music::stopMusic();
       break;
     default:
       break;
@@ -66,24 +56,12 @@ void Game::handleSDLKeyEvents(const SDL_Keycode& key) {
 }
 
 bool Game::init() {
-
   if (!initSDL2()) return false;
   
-  main_window_ = SDL_CreateWindow("KUGE", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, kSCREEN_SIZE_.x, kSCREEN_SIZE_.y, SDL_WINDOW_SHOWN);
-  // main_window_ = SDL_CreateWindow("KUGE", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP);
-  if (main_window_ == nullptr) {
-	  ktp::logSDLError("SDL_CreateWindow");
-    return false;
-	}
+  if (!main_window_.create(kSCREEN_SIZE_)) return false;
   event_bus_.postEvent(kuge::EventTypes::SDL2_MainWindowCreated);
 
-  renderer_ = SDL_CreateRenderer(main_window_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-  if (renderer_ == nullptr) {
-    ktp::logSDLError("SDL_CreateRenderer");
-    return false;
-  }
-  SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
-  SDL_RenderSetLogicalSize(renderer_, kSCREEN_SIZE_.x, kSCREEN_SIZE_.y);
+  if (!renderer_.create(main_window_)) return false; 
   event_bus_.postEvent(kuge::EventTypes::SDL2_RenderCreated);
 
   if (!loadResources()) return false;
@@ -151,14 +129,16 @@ bool Game::loadResources() {
 }
 
 void Game::render() {
-  // SDL_SetRenderDrawColor(renderer_, 0x00, 0x00, 0xFF, 0x00);
-  SDL_RenderClear(renderer_);
+  renderer_.setDrawColor(0x00, 0x00, 0xFF, 0x00);
+  renderer_.clear();
+
   texture_jpg_.render({0, 0});
   texture_png_.render({texture_jpg_.getWidth(), 0});
   texture_text_blended_.render({texture_png_.getWidth() * 2, 0});
   texture_text_shaded_.render({texture_png_.getWidth() * 2, texture_text_blended_.getHeight()});
   texture_text_solid_.render({texture_png_.getWidth() * 2, texture_text_blended_.getHeight() + texture_text_shaded_.getHeight()});
-  SDL_RenderPresent(renderer_);
+
+  renderer_.present();
 }
 
 void Game::update() {
@@ -167,7 +147,6 @@ void Game::update() {
 }
 
 void Game::clean() {
-  ktp::cleanup(renderer_, main_window_);
   ktp::SDL2_Music::closeMixer();
   if (TTF_WasInit()) TTF_Quit();
   IMG_Quit();
