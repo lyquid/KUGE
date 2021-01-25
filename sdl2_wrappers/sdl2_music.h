@@ -12,7 +12,7 @@ class SDL2_Music {
   ~SDL2_Music() { free(); }
   
   bool loadMusic(const std::string& path);
-  void play(int loops = -1) { Mix_PlayMusic(music_, loops); }
+  bool play(int loops = -1);
 
   static bool initMixer(int freq       = MIX_DEFAULT_FREQUENCY,
                         Uint16 format  = MIX_DEFAULT_FORMAT,

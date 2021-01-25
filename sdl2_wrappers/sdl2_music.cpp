@@ -36,3 +36,11 @@ bool ktp::SDL2_Music::loadMusic(const std::string& path) {
   }
   return true;
 }
+
+bool ktp::SDL2_Music::play(int loops) {
+  if (Mix_PlayMusic(music_, loops) != 0) {
+    ktp::logSDLError("Mix_PlayMusic");
+    return false;
+  }
+  return true;
+}
