@@ -83,7 +83,7 @@ bool Game::initSDL2() {
     ktp::logSDLError("TTF_Init");
     return false;
   }
-  if (!ktp::SDL2_Music::initMixer()) return false;
+  if (!ktp::SDL2_Audio::initMixer()) return false;
 
   event_bus_.postEvent(kuge::EventTypes::SDL2_Initialized);
   return true;
@@ -147,7 +147,7 @@ void Game::update() {
 }
 
 void Game::clean() {
-  ktp::SDL2_Music::closeMixer();
+  ktp::SDL2_Audio::closeMixer();
   if (TTF_WasInit()) TTF_Quit();
   IMG_Quit();
 	SDL_Quit();

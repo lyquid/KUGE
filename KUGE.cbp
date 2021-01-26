@@ -45,6 +45,8 @@
 		<Unit filename="headers/output_system.h" />
 		<Unit filename="headers/system.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="sdl2_wrappers/sdl2_audio.cpp" />
+		<Unit filename="sdl2_wrappers/sdl2_audio.h" />
 		<Unit filename="sdl2_wrappers/sdl2_font.cpp" />
 		<Unit filename="sdl2_wrappers/sdl2_font.h" />
 		<Unit filename="sdl2_wrappers/sdl2_log.h" />
@@ -52,6 +54,8 @@
 		<Unit filename="sdl2_wrappers/sdl2_music.h" />
 		<Unit filename="sdl2_wrappers/sdl2_renderer.cpp" />
 		<Unit filename="sdl2_wrappers/sdl2_renderer.h" />
+		<Unit filename="sdl2_wrappers/sdl2_sound.cpp" />
+		<Unit filename="sdl2_wrappers/sdl2_sound.h" />
 		<Unit filename="sdl2_wrappers/sdl2_texture.cpp" />
 		<Unit filename="sdl2_wrappers/sdl2_texture.h" />
 		<Unit filename="sdl2_wrappers/sdl2_timer.cpp" />

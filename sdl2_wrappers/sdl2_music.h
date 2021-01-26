@@ -14,12 +14,6 @@ class SDL2_Music {
   bool loadMusic(const std::string& path);
   bool play(int loops = -1);
 
-  static bool initMixer(int freq       = MIX_DEFAULT_FREQUENCY,
-                        Uint16 format  = MIX_DEFAULT_FORMAT,
-                        int channels   = 2, 
-                        int chunk_size = 1024);
-  static void closeMixer();
-
   static void pauseMusic() { Mix_PauseMusic(); }
   static void resumeMusic() { Mix_ResumeMusic(); }
   static void stopMusic() { Mix_HaltMusic(); }
