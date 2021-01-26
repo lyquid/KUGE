@@ -20,6 +20,13 @@ class SDL2_Texture {
   int getHeight() const { return height_; }
   int getWidth() const { return width_; }
   SDL_Point getSize() const { return {width_, height_}; }
+
+  /**
+  * Load an image file to an SDL_Surface and then calls createTextureFromSurface() 
+  * to create a texture from it.
+  * @param path The path to the image file.
+  * @return True on success, or false on errors.
+  */
   bool loadFromFile(const std::string& path);
 
   /* 
@@ -52,11 +59,31 @@ class SDL2_Texture {
   other fast changing updating text displays. */
   bool loadFromTextSolid(const SDL2_Font& font, const std::string& text, const SDL_Color& color);
 
+  /**
+  * Renders the whole texture to the specified render member.
+  * @param where The coordinates to render the texture at.
+  */
   void render(const SDL_Point& where);
+
+  /**
+  * Sets a pointer to the renderer where the texture will be rendered in. 
+  * Don't try to render the texture without having called this function.
+  * @param ren The address of the renderer in which the texture shall be rendered in.
+  */
   void setRenderer(SDL2_Renderer& ren) { renderer_ = &ren; }
 
  private:
+
+  /**
+  * Creates a texture from the specified surface.
+  * @param surface The SDL_Surface structure containing pixel data used to fill 
+  *                the texture.
+  */
   void createTextureFromSurface(SDL_Surface& surface);
+
+  /**
+  * Destroys the SDL_Texture* member, freeing the memory used.
+  */
   void free();
 
   SDL_Texture* texture_;
