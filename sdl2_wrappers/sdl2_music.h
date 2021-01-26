@@ -12,10 +12,10 @@ class SDL2_Music {
   ~SDL2_Music() { free(); }
   
   /**
-  * Load music file to use. This can load WAVE, MOD, MIDI, OGG, MP3, FLAC, and
-  * any file that you use a command to play with.
+  * Load music file to use. This can load WAVE, MOD, MIDI, OGG, MP3, FLAC, and 
+  * any file that you use a command to play with. 
   * If you are using an external command to play the music, you must call Mix_SetMusicCMD 
-  * before this, otherwise the internal players will be used. Alternatively, if
+  * before this, otherwise the internal players will be used. Alternatively, if 
   * you have set an external command up and don't want to use it, you must call
   * Mix_SetMusicCMD(NULL) to use the built-in players again.
   * @param path Path to the music file to use.
@@ -67,6 +67,7 @@ class SDL2_Music {
   static bool isMusicPaused() { return Mix_PausedMusic() != 0; }
 
  private:
+
   /**
   * Free the loaded music. If music is playing it will be halted. 
   * If music is fading out, then this function will wait (blocking) until the 

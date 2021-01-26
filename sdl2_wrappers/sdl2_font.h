@@ -14,10 +14,6 @@ class SDL2_Font {
   SDL2_Font(): font_(nullptr) {}
   ~SDL2_Font() { free(); }
 
-  /**
-  * Returns the pointer to the TTF_font member (the font).
-  * @return The pointer to the TTF_font member.
-  */
   TTF_Font* getFont() const { return font_; }
 
   /**

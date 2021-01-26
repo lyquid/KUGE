@@ -27,10 +27,6 @@ class SDL2_Renderer {
   */
   bool create(const SDL2_Window& window);
 
-  /**
-  * Returns the pointer to the SDL_Renderer member.
-  * @return The pointer to the SDL_Renderer member.
-  */
   SDL_Renderer* getRenderer() const { return renderer_; }
 
   /**
@@ -78,6 +74,7 @@ class SDL2_Renderer {
   bool setDrawColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 
  private:
+ 
   /**
   * Use this function to destroy the rendering context for a window and free 
   * associated textures.

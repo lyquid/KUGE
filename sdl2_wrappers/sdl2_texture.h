@@ -60,10 +60,11 @@ class SDL2_Texture {
   bool loadFromTextSolid(const SDL2_Font& font, const std::string& text, const SDL_Color& color);
 
   /**
-  * Renders the whole texture to the specified render member.
+  * Renders the whole texture to the renderer member.
   * @param where The coordinates to render the texture at.
+  * @return True on success, or false on errors.
   */
-  void render(const SDL_Point& where);
+  bool render(const SDL_Point& where);
 
   /**
   * Sets a pointer to the renderer where the texture will be rendered in. 
