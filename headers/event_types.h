@@ -17,7 +17,7 @@ enum class EventTypes {
   SDL2_MainWindowCreated,
   SDL2_RenderCreated,
   StartedCleanup,
-  count,
+  count
 };
 
 // https://stackoverflow.com/questions/65670462/elegant-way-to-ensure-a-stdmap-has-a-concrete-size-in-compilation-time

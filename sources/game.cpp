@@ -75,14 +75,14 @@ bool Game::initSDL2() {
     ktp::logSDLError("SDL_Init");
     return false;
   }
+
   if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG) {
   	ktp::logSDLError("IMG_Init");
 	  return false;
   }
-  if (!TTF_WasInit() && TTF_Init() != 0) {
-    ktp::logSDLError("TTF_Init");
-    return false;
-  }
+
+  if (!ktp::SDL2_Font::initTTF()) return false;
+
   if (!ktp::SDL2_Audio::initMixer()) return false;
 
   event_bus_.postEvent(kuge::EventTypes::SDL2_Initialized);
@@ -148,8 +148,7 @@ void Game::update() {
 
 void Game::clean() {
   ktp::SDL2_Audio::closeMixer();
-  if (TTF_WasInit()) TTF_Quit();
+  ktp::SDL2_Font::closeTTF();
   IMG_Quit();
 	SDL_Quit();
-  event_bus_.postEvent(kuge::EventTypes::GameCleaned);
 }
