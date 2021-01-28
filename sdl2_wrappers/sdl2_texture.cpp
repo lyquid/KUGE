@@ -1,11 +1,5 @@
 #include "./sdl2_texture.h"
 
-ktp::SDL2_Texture::SDL2_Texture():
-  texture_(nullptr),
-  renderer_(nullptr),
-  height_(0),
-  width_(0) {}
-
 void ktp::SDL2_Texture::free() {
   if (texture_ != nullptr) {
     SDL_DestroyTexture(texture_);

@@ -8,7 +8,6 @@ namespace ktp {
 
 class SDL2_Window {
  public:
-  SDL2_Window(): window_(nullptr) {}
   ~SDL2_Window() { free(); }
 
   /**
@@ -28,8 +27,8 @@ class SDL2_Window {
   */
   void free();
 
-  SDL_Point size_;
-  SDL_Window* window_;
+  SDL_Point size_ {};
+  SDL_Window* window_ = nullptr;
 };
 
 } // end namespace ktp

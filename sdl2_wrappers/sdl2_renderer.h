@@ -9,7 +9,6 @@ namespace ktp {
 
 class SDL2_Renderer {
  public:
-  SDL2_Renderer(): renderer_(nullptr) {}
   ~SDL2_Renderer() { free(); }
 
   /**
@@ -81,7 +80,7 @@ class SDL2_Renderer {
   */
   void free();
 
-  SDL_Renderer* renderer_;
+  SDL_Renderer* renderer_ = nullptr;
 };
 
 } // end namespace ktp

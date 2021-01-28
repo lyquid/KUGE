@@ -8,7 +8,6 @@ namespace ktp {
 
 class SDL2_Music {
  public:
-  SDL2_Music(): music_(nullptr) {}
   ~SDL2_Music() { free(); }
   
   /**
@@ -75,7 +74,7 @@ class SDL2_Music {
   */
   void free();
   
-  Mix_Music* music_;
+  Mix_Music* music_ = nullptr;
 };
 
 } // end namespace ktp

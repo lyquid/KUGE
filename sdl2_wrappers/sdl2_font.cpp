@@ -1,19 +1,5 @@
 #include "./sdl2_font.h"
 
-ktp::SDL2_Font::SDL2_Font(): 
-  font_(nullptr),
-  face_family_name_(std::string()),
-  face_style_name_(std::string()),
-  hinting_(0),
-  kerning_(false),
-  line_skip_(0),
-  max_ascent_(0),
-  max_descent_(0),
-  max_height_(0),
-  monospaced_(false),
-  outline_(0),
-  style_(0) {}
-
 void ktp::SDL2_Font::free() {
   if (font_ != nullptr && TTF_WasInit()) {
     TTF_CloseFont(font_);

@@ -11,7 +11,6 @@ namespace ktp {
 
 class SDL2_Font {
  public:
-  SDL2_Font();
   ~SDL2_Font() { free(); }
 
   /**
@@ -205,19 +204,18 @@ class SDL2_Font {
    */
   void queryFontInfo();
 
-  TTF_Font* font_;
-
-  std::string face_family_name_;
-  std::string face_style_name_;
-  int hinting_;
-  bool kerning_;
-  int line_skip_;
-  int max_ascent_;
-  int max_descent_;
-  int max_height_;
-  bool monospaced_;
-  int outline_;
-  int style_;
+  TTF_Font* font_ = nullptr;
+  std::string face_family_name_ {};
+  std::string face_style_name_ {};
+  int hinting_ = 0;
+  bool kerning_ = false;
+  int line_skip_ = 0;
+  int max_ascent_ = 0;
+  int max_descent_ = 0;
+  int max_height_ = 0;
+  bool monospaced_ = false;
+  int outline_ = 0;
+  int style_ = 0; 
 };
 
 } // end namespace ktp

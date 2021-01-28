@@ -8,7 +8,6 @@ namespace ktp {
 
 class SDL2_Sound {
  public:
-  SDL2_Sound(): sound_(nullptr) {}
   ~SDL2_Sound() { free(); }
   
   bool loadSound(const std::string& path);
@@ -16,7 +15,7 @@ class SDL2_Sound {
 
  private:
   void free();
-  Mix_Chunk* sound_;
+  Mix_Chunk* sound_ = nullptr;
 };
 
 } // end namespace ktp

@@ -14,7 +14,6 @@ namespace ktp {
 
 class SDL2_Texture {
  public:
-  SDL2_Texture();
   ~SDL2_Texture() { free(); }
 
   int getHeight() const { return height_; }
@@ -87,10 +86,10 @@ class SDL2_Texture {
   */
   void free();
 
-  SDL_Texture* texture_;
-  SDL2_Renderer* renderer_;
-  int height_;
-  int width_;
+  SDL_Texture* texture_ = nullptr;
+  SDL2_Renderer* renderer_ = nullptr;
+  int height_ = 0;
+  int width_ = 0;
 };
 
 } // end namespace ktp
