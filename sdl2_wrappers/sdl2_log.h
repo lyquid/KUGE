@@ -14,7 +14,7 @@ namespace ktp {
 * Log a message to the standard output stream.
 * @param msg The message to write, format will be msg + '\n'.
 */
-static void logMessage(const std::string& msg) {
+static void logMessage(std::string_view msg) {
   std::cout << msg << '\n';
 }
 
@@ -23,7 +23,7 @@ static void logMessage(const std::string& msg) {
 * @param os The output stream to write the message to.
 * @param msg The message to write, format will be msg + '\n'.
 */
-static void logMessage(std::ostream& os, const std::string& msg) {
+static void logMessage(std::ostream& os, std::string_view msg) {
   os << msg << '\n';
 }
 
@@ -31,7 +31,7 @@ static void logMessage(std::ostream& os, const std::string& msg) {
 * Log an SDL error with some error message to the standard output stream.
 * @param msg The error message to write, format will be msg error: SDL_GetError() + '\n'.
 */
-static void logSDLError(const std::string& msg){
+static void logSDLError(std::string_view msg){
 	std::cerr << msg << " error: " << SDL_GetError() << '\n';
 }
 
@@ -40,7 +40,7 @@ static void logSDLError(const std::string& msg){
 * @param os The output stream to write the message to.
 * @param msg The error message to write, format will be msg error: SDL_GetError() + '\n'.
 */
-static void logSDLError(std::ostream& os, const std::string& msg){
+static void logSDLError(std::ostream& os, std::string_view msg){
 	os << msg << " error: " << SDL_GetError() << '\n';
 }
 
