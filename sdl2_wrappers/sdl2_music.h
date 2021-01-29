@@ -3,6 +3,7 @@
 
 #include "./sdl2_log.h"
 #include <SDL_mixer.h>
+#include <string>
 
 namespace ktp {
 
@@ -75,6 +76,18 @@ class SDL2_Music {
   void free();
   
   Mix_Music* music_ = nullptr;
+ 
+  // trying to get rid of the raw pointer
+  // need a custom deleter
+  /* template <auto fn>
+  using deleter_from_fn = std::integral_constant<decltype(fn), fn>;
+
+  template <typename T, auto fn>
+  using my_unique_ptr = std::unique_ptr<T, deleter_from_fn<fn>>;
+
+  my_unique_ptr<Mix_Music, Mix_FreeMusic> p{Mix_LoadMUS(path)};
+  my_unique_ptr<Mix_Music, Mix_FreeMusic> p_music_;
+  */
 };
 
 } // end namespace ktp

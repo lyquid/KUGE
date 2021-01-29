@@ -5,7 +5,7 @@ void ktp::SDL2_Music::free() {
     Mix_FreeMusic(music_);
     music_ = nullptr;
   }
-}
+} 
 
 bool ktp::SDL2_Music::loadMusic(const std::string& path) {
   free();
@@ -21,6 +21,6 @@ bool ktp::SDL2_Music::play(int loops) {
   if (Mix_PlayMusic(music_, loops) != 0) {
     ktp::logSDLError("Mix_PlayMusic");
     return false;
-  }
+  } 
   return true;
 }
