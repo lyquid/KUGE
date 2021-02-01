@@ -1,14 +1,5 @@
 #include "../headers/game.h"
 
-Game::Game():
-  quit_(false),
-  kFONT_COLOR_({0xFF, 0x00, 0x00, 0xFF}),
-  kSCREEN_SIZE_({1024u, 768u}),
-  input_sys_(event_bus_),
-  output_sys_(event_bus_) { 
-    event_bus_.setSystems(input_sys_, output_sys_);
-  }
-
 void Game::handleSDLEvents() {
   while (SDL_PollEvent(&sdl_event_)) {
     switch (sdl_event_.type) {

@@ -41,8 +41,8 @@ class EventBus {
   }
 
  private:
-  std::queue<Event> events_;
-  std::vector<std::unique_ptr<System>> systems_;
+  std::queue<Event> events_{};
+  std::vector<std::unique_ptr<System>> systems_{};
 };
 
 } // end namespace kuge
