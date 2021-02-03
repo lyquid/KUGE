@@ -54,6 +54,9 @@
     <ClCompile Include="sdl2_wrappers\sdl2_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sdl2_wrappers\sdl2_audio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\system.h">
@@ -99,6 +102,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sdl2_wrappers\sdl2_window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl2_wrappers\sdl2_audio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

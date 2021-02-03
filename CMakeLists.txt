@@ -5,13 +5,13 @@ project(KUGE VERSION 0.1.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-#include(CTest)
-#enable_testing()
+include(CTest)
+enable_testing()
 
 # Use our modified FindSDL2* modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${KUGE_SOURCE_DIR}/cmake")
 # Set an output directory for our binaries
-set(BIN_DIR ${sand_SOURCE_DIR}/bin)
+set(BIN_DIR ${KUGE_SOURCE_DIR}/bin)
 
 # Bump up warning levels appropriately for clang, gcc & msvc
 # Also set debug/optimization flags depending on the build type. IDE users choose this when
@@ -39,23 +39,24 @@ find_package(SDL2_MIXER REQUIRED)
 include_directories(${SDL2_MIXER_INCLUDE_DIR})
 
 add_executable(	KUGE main.cpp 
-								sdl2_wrappers/sdl2_audio.cpp 
-								sdl2_wrappers/sdl2_font.cpp 
-								sdl2_wrappers/sdl2_music.cpp 
-								sdl2_wrappers/sdl2_renderer.cpp
-								sdl2_wrappers/sdl2_sound.cpp
+								sdl2_wrappers/sdl2_audio
+								sdl2_wrappers/sdl2_font
+								sdl2_wrappers/sdl2_music
+								sdl2_wrappers/sdl2_renderer
+								sdl2_wrappers/sdl2_sound
 								sdl2_wrappers/sdl2_texture
-								sdl2_wrappers/sdl2_timer.cpp
-								sdl2_wrappers/sdl2_window.cpp
-								sources/event_bus.cpp
-								sources/event.cpp
-								sources/game.cpp
-								sources/input_system.cpp
-								sources/output_system.cpp
-								sources/system.cpp)
+								sdl2_wrappers/sdl2_timer
+								sdl2_wrappers/sdl2_window
+								sources/event_bus
+								sources/event
+								sources/game
+								sources/input_system
+								sources/output_system
+								sources/system )
 target_link_libraries(KUGE ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${SDL2_TTF_LIBRARY} ${SDL2_MIXER_LIBRARY})
+target_include_directories(KUGE PUBLIC "${KUGE_SOURCE_DIR}/headers")
 install(TARGETS KUGE RUNTIME DESTINATION ${BIN_DIR})
 
-#set(CPACK_PROJECT_NAME ${PROJECT_NAME})
-#set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
-#include(CPack)
+set(CPACK_PROJECT_NAME ${PROJECT_NAME})
+set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
+include(CPack)

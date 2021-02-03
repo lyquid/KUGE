@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="sdl2_wrappers\sdl2_audio.cpp" />
     <ClCompile Include="sdl2_wrappers\sdl2_font.cpp" />
     <ClCompile Include="sdl2_wrappers\sdl2_music.cpp" />
     <ClCompile Include="sdl2_wrappers\sdl2_renderer.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="headers\input_system.h" />
     <ClInclude Include="headers\output_system.h" />
     <ClInclude Include="headers\system.h" />
+    <ClInclude Include="sdl2_wrappers\sdl2_audio.h" />
     <ClInclude Include="sdl2_wrappers\sdl2_font.h" />
     <ClInclude Include="sdl2_wrappers\sdl2_log.h" />
     <ClInclude Include="sdl2_wrappers\sdl2_music.h" />
