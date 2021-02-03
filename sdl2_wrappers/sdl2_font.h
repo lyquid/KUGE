@@ -9,6 +9,20 @@
 
 namespace ktp {
 
+typedef struct {
+  std::string face_family_name_ {};
+  std::string face_style_name_ {};
+  int hinting_ = 0;
+  bool kerning_ = false;
+  int line_skip_ = 0;
+  int max_ascent_ = 0;
+  int max_descent_ = 0;
+  int max_height_ = 0;
+  bool monospaced_ = false;
+  int outline_ = 0;
+  int style_ = 0;
+} FontInfo;
+
 class SDL2_Font {
  public:
   ~SDL2_Font() { free(); }
@@ -38,14 +52,14 @@ class SDL2_Font {
   * may return a NULL pointer, in which case the information is not available.
   * @return The current family name of of the face of the font, or NULL perhaps.
   */
-  std::string getFaceFamilyName() const { return face_family_name_; }
+  std::string getFaceFamilyName() const { return font_info_.face_family_name_; }
 
   /**
    * Get the current font face style name from the loaded font. This function 
    * may return a NULL pointer, in which case the information is not available. 
    * @return The current style name of of the face of the font, or NULL perhaps.
    */
-  std::string getFaceStyleName() const { return face_style_name_; }
+  std::string getFaceStyleName() const { return font_info_.face_style_name_; }
 
   /**
    * Get the current hinting setting of the loaded font.
@@ -56,21 +70,21 @@ class SDL2_Font {
               3 TTF_HINTING_NONE, 
             If no hinting is set then TTF_HINTING_NORMAL is returned. 
    */
-  int getHinting() const { return hinting_; }
+  int getHinting() const { return font_info_.hinting_; }
 
   /**
    * Get the current kerning setting of the loaded font.
    * @return False if kerning is disabled. True is returned when enabled. 
    *         The default for a newly loaded font is enabled(1). 
    */
-  bool getKerning() const { return kerning_; }
+  bool getKerning() const { return font_info_.kerning_; }
 
   /**
    * Get the recommended pixel height of a rendered line of text of the loaded 
    * font. This is usually larger than the getMaxHeight() of the font.
    * @return The recommended spacing between lines of text for this font.
    */
-  int getLineSkip() const { return line_skip_; }
+  int getLineSkip() const { return font_info_.line_skip_; }
 
   /**
    * Get the maximum pixel ascent of all glyphs of the loaded font. This can 
@@ -81,7 +95,7 @@ class SDL2_Font {
    * 
    * @return The maximum pixel ascent of all glyphs in the font. 
    */
-  int getMaxAscent() const { return max_ascent_; }
+  int getMaxAscent() const { return font_info_.max_ascent_; }
 
   /**
    * Get the maximum pixel descent of all glyphs of the loaded font. This can 
@@ -93,7 +107,7 @@ class SDL2_Font {
    * @return The offset from the baseline to the bottom of the font. 
    *         This is a negative value, relative to the baseline. 
    */
-  int getMaxDescent() const { return max_descent_; }
+  int getMaxDescent() const { return font_info_.max_descent_; }
 
   /**
    * Get the maximum pixel height of all glyphs of the loaded font. You may use 
@@ -103,13 +117,13 @@ class SDL2_Font {
    * responsible for line spacing, see the TTF_FontLineSkip as well.
    * @return The maximum pixel height of all glyphs in the font. 
    */
-  int getMaxHeight() const { return max_height_; }
+  int getMaxHeight() const { return font_info_.max_height_; }
 
    /**
    * Get the current outline size of the loaded font.
    * @return The size of the outline currently set on the font, in pixels. 
    */
-  int getOutline() const { return outline_; }
+  int getOutline() const { return font_info_.outline_; }
 
   /**
    * Get the rendering style of the loaded font.
@@ -120,7 +134,7 @@ class SDL2_Font {
               TTF_STYLE_STRIKETHROUGH
             If no style is set then TTF_STYLE_NORMAL is returned. 
    */
-  int getStyle() const { return style_; }
+  int getStyle() const { return font_info_.style_; }
 
   /**
    * Get the status of the availability of the glyph for ch from the loaded font.
@@ -137,7 +151,7 @@ class SDL2_Font {
    *       glyph_width * string_length
    * @return True if font is a fixed width font. False if not a fixed width font. 
    */
-  bool isMonospaced() const { return monospaced_; }
+  bool isMonospaced() const { return font_info_.monospaced_; }
 
   /**
   * Load file for use as a font, at ptsize size. This is actually 
@@ -205,17 +219,7 @@ class SDL2_Font {
   void queryFontInfo();
 
   TTF_Font* font_ = nullptr;
-  std::string face_family_name_ {};
-  std::string face_style_name_ {};
-  int hinting_ = 0;
-  bool kerning_ = false;
-  int line_skip_ = 0;
-  int max_ascent_ = 0;
-  int max_descent_ = 0;
-  int max_height_ = 0;
-  bool monospaced_ = false;
-  int outline_ = 0;
-  int style_ = 0; 
+  FontInfo font_info_ {};
 };
 
 } // end namespace ktp

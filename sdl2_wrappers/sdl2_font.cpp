@@ -4,6 +4,7 @@ void ktp::SDL2_Font::free() {
   if (font_ != nullptr && TTF_WasInit()) {
     TTF_CloseFont(font_);
     font_ = nullptr;
+    font_info_ = {};
   }
 }
 
@@ -26,56 +27,56 @@ bool ktp::SDL2_Font::initTTF() {
 }
 
 bool ktp::SDL2_Font::loadFont(const std::string& path, int size) {
-  free();
+  ktp::SDL2_Font::free();
   font_ = TTF_OpenFont(path.c_str(), size);
   if (font_ == nullptr) {
     ktp::logSDLError("TTF_OpenFont");
     return false;
   }
-  queryFontInfo();
+  ktp::SDL2_Font::queryFontInfo();
   return true;
 }
 
 void ktp::SDL2_Font::setHinting(int hinting) {
-  if (hinting_ != hinting) {
+  if (font_info_.hinting_ != hinting) {
     TTF_SetFontHinting(font_, hinting);
-    queryFontInfo();
+    ktp::SDL2_Font::queryFontInfo();
   }
 }
 
 void ktp::SDL2_Font::setKerning(bool allowed) {
-  if (kerning_ != allowed) {
+  if (font_info_.kerning_ != allowed) {
     allowed ? TTF_SetFontKerning(font_, 1) : TTF_SetFontKerning(font_, 0);
-    queryFontInfo();
+    ktp::SDL2_Font::queryFontInfo();
   }
 }
 
 void ktp::SDL2_Font::setOutline(int outline) {
-  if (outline_ != outline) {
+  if (font_info_.outline_ != outline) {
     TTF_SetFontOutline(font_, outline);
-    queryFontInfo();
+    ktp::SDL2_Font::queryFontInfo();
   }
 }
 
 void ktp::SDL2_Font::setStyle(int style) {
-  if (style_ != style) {
+  if (font_info_.style_ != style) {
     TTF_SetFontStyle(font_, style);
-    queryFontInfo();
+    ktp::SDL2_Font::queryFontInfo();
   }
 }
 
 void ktp::SDL2_Font::queryFontInfo() {
-  face_family_name_ = TTF_FontFaceFamilyName(font_);
-  face_style_name_  = TTF_FontFaceStyleName(font_);
-  hinting_          = TTF_GetFontHinting(font_);
-  kerning_          = TTF_GetFontKerning(font_) != 0;
-  line_skip_        = TTF_FontLineSkip(font_);
-  max_ascent_       = TTF_FontAscent(font_);
-  max_descent_      = TTF_FontDescent(font_);
-  max_height_       = TTF_FontHeight(font_);
-  monospaced_       = TTF_FontFaceIsFixedWidth(font_) != 0;
-  outline_          = TTF_GetFontOutline(font_);
-  style_            = TTF_GetFontStyle(font_);
+  font_info_.face_family_name_ = TTF_FontFaceFamilyName(font_);
+  font_info_.face_style_name_  = TTF_FontFaceStyleName(font_);
+  font_info_.hinting_          = TTF_GetFontHinting(font_);
+  font_info_.kerning_          = TTF_GetFontKerning(font_) != 0;
+  font_info_.line_skip_        = TTF_FontLineSkip(font_);
+  font_info_.max_ascent_       = TTF_FontAscent(font_);
+  font_info_.max_descent_      = TTF_FontDescent(font_);
+  font_info_.max_height_       = TTF_FontHeight(font_);
+  font_info_.monospaced_       = TTF_FontFaceIsFixedWidth(font_) != 0;
+  font_info_.outline_          = TTF_GetFontOutline(font_);
+  font_info_.style_            = TTF_GetFontStyle(font_);
 }
 
 void ktp::SDL2_Font::queryTTFVersions() {
