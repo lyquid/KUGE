@@ -62,6 +62,12 @@ class SDL2_Font {
   std::string getFaceStyleName() const { return font_info_.face_style_name_; }
 
   /**
+   * Get a reference to the FontInfo struct.
+   * @return A reference to the FontInfo struct.
+   */
+  const FontInfo& getFontInfo() const { return font_info_; }
+
+  /**
    * Get the current hinting setting of the loaded font.
    * @return The hinting type matching one of the following defined values:
               0 TTF_HINTING_NORMAL, 
