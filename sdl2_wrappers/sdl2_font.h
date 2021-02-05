@@ -25,7 +25,13 @@ typedef struct {
 
 class SDL2_Font {
  public:
+  SDL2_Font() = default;
+  SDL2_Font(const SDL2_Font& other) = delete;
+  SDL2_Font(SDL2_Font&& other) = delete;
   ~SDL2_Font() { free(); }
+
+  SDL2_Font& operator=(const SDL2_Font& other) = delete;
+  SDL2_Font& operator=(SDL2_Font&& other) = delete;
 
   /**
    * Initializes SDL_ttf and queries for the versions used (linked and compiled).
@@ -195,10 +201,10 @@ class SDL2_Font {
 
   /**
    * Set the outline pixel width of the loaded font.
-   * @param outline The size of outline desired, in pixels. Use 0(zero) to turn 
+   * @param pixels The size of outline desired, in pixels. Use 0(zero) to turn 
    * off outlining.
    */
-  void setOutline(int outline);
+  void setOutline(int pixels);
 
   /**
    * Set the rendering style of the loaded font.

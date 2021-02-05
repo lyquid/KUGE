@@ -51,9 +51,9 @@ void ktp::SDL2_Font::setKerning(bool allowed) {
   }
 }
 
-void ktp::SDL2_Font::setOutline(int outline) {
-  if (font_info_.outline_ != outline) {
-    TTF_SetFontOutline(font_, outline);
+void ktp::SDL2_Font::setOutline(int pixels) {
+  if (font_info_.outline_ != pixels) {
+    TTF_SetFontOutline(font_, pixels);
     ktp::SDL2_Font::queryFontInfo();
   }
 }
