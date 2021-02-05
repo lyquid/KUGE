@@ -17,5 +17,19 @@ bool ktp::SDL2_Audio::initMixer(int freq, Uint16 format, int channels, int chunk
     while (Mix_Init(0)) Mix_Quit();
     return false;
   }
+  ktp::SDL2_Audio::queryMixerVersions();
+  ktp::logMessage("SDL_mixer compiled version: " +  
+                    std::to_string(ktp::SDL2_Audio::mixer_compiled_version_.major) + '.' + 
+                    std::to_string(ktp::SDL2_Audio::mixer_compiled_version_.minor) + '.' + 
+                    std::to_string(ktp::SDL2_Audio::mixer_compiled_version_.patch));
+  ktp::logMessage("SDL_mixer linked version: " + 
+                    std::to_string(ktp::SDL2_Audio::mixer_linked_version_->major) + '.' + 
+                    std::to_string(ktp::SDL2_Audio::mixer_linked_version_->minor) + '.' + 
+                    std::to_string(ktp::SDL2_Audio::mixer_linked_version_->patch));
   return true;
+}
+
+void ktp::SDL2_Audio::queryMixerVersions() {
+  SDL_MIXER_VERSION(&mixer_compiled_version_);
+  mixer_linked_version_ = Mix_Linked_Version();
 }

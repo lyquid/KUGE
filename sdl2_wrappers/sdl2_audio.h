@@ -58,6 +58,13 @@ namespace SDL2_Audio {
                 int channels   = 2, 
                 int chunk_size = 1024);
                 
+
+  /**
+   * Querys for the compiled version and the linked version of SDL_mixer libraries.
+   */
+  static void queryMixerVersions();
+  inline static SDL_version mixer_compiled_version_;
+  inline static const SDL_version* mixer_linked_version_;
 } // end namespace SDL2_Audio
 
 } // end namespace ktp

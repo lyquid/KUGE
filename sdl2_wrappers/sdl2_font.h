@@ -45,7 +45,7 @@ class SDL2_Font {
   static void closeTTF() { if (TTF_WasInit()) TTF_Quit(); }
 
   /**
-   * Querys for the compiled version and the linked version of TTF_Font libraries.
+   * Querys for the compiled version and the linked version of SDL_ttf libraries.
    */
   static void queryTTFVersions();
   inline static SDL_version ttf_compiled_version_;

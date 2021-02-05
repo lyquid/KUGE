@@ -1,7 +1,7 @@
 #include "./sdl2_font.h"
 
 void ktp::SDL2_Font::free() {
-  if (font_ != nullptr && TTF_WasInit()) {
+  if (font_ != nullptr /* && TTF_WasInit() */) {
     TTF_CloseFont(font_);
     font_ = nullptr;
     font_info_ = {};
@@ -14,11 +14,11 @@ bool ktp::SDL2_Font::initTTF() {
     return false;
   } else {
     ktp::SDL2_Font::queryTTFVersions();
-    ktp::logMessage("TTF_Font compiled version: " +  
+    ktp::logMessage("SDL_ttf compiled version: " +  
                     std::to_string(ktp::SDL2_Font::ttf_compiled_version_.major) + '.' + 
                     std::to_string(ktp::SDL2_Font::ttf_compiled_version_.minor) + '.' + 
                     std::to_string(ktp::SDL2_Font::ttf_compiled_version_.patch));
-    ktp::logMessage("TTF_Font linked version: " + 
+    ktp::logMessage("SDL_ttf linked version: " + 
                     std::to_string(ktp::SDL2_Font::ttf_linked_version_->major) + '.' + 
                     std::to_string(ktp::SDL2_Font::ttf_linked_version_->minor) + '.' + 
                     std::to_string(ktp::SDL2_Font::ttf_linked_version_->patch));
