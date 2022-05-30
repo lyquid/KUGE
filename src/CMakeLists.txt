@@ -1,5 +1,6 @@
 add_executable(KUGE
   ../main.cpp
+  entity_manager.cpp
 )
 target_compile_features(KUGE PUBLIC cxx_std_17)
 set_target_properties(KUGE PROPERTIES CXX_EXTENSIONS OFF)
