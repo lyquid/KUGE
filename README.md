@@ -1,3 +1,3 @@
-# ktpUtils
+# K.U.G.E.
 
-Utility functions and classes.
+Ketepincho's Unbelievable(Useless) Game Engine.
