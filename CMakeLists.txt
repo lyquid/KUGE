@@ -1,61 +1,72 @@
-cmake_minimum_required(VERSION 3.0.0)
-project(KUGE VERSION 0.1.0)
+cmake_minimum_required(VERSION 3.11...3.30)
 
-# specify the C++ standard
+if(DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+  set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+endif()
+
+project(
+  KUGE
+  VERSION 0.1.0
+  DESCRIPTION "Ketepincho's Unbelievable(Useless) Game Engine"
+  LANGUAGES CXX
+)
+
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-
-include(CTest)
-enable_testing()
-
-# Use our modified FindSDL2* modules
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${KUGE_SOURCE_DIR}/cmake")
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 # Set an output directory for our binaries
 set(BIN_DIR ${KUGE_SOURCE_DIR}/bin)
 
-# Bump up warning levels appropriately for clang, gcc & msvc
-# Also set debug/optimization flags depending on the build type. IDE users choose this when
-# selecting the build mode in their IDE
-if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Weffc++ -Wmain -Wfloat-equal -pedantic")
-	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG} -g")
-	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_RELEASE} -O2")
-elseif (${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
-	if (CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
-		string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-	else()
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
-	endif()
+# Let's nicely support folders in IDEs
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+# Only do these if this is the main project, and not if it is included through add_subdirectory
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+  # Testing only available if this is the main app
+  # Note this needs to be done in the main CMakeLists
+  # since it calls enable_testing, which must be in the
+  # main CMakeLists.
+  include(CTest)
+	enable_testing()
+
+  # Docs only available if this is the main app
+  find_package(Doxygen)
+  if(Doxygen_FOUND)
+    #add_subdirectory(docs)
+  else()
+    message(STATUS "Doxygen not found, not building docs")
+  endif()
 endif()
 
-# Look up SDL2 and add the include directory to our include path
-find_package(SDL2 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIR})
-find_package(SDL2_IMAGE REQUIRED)
-include_directories(${SDL2_IMAGE_INCLUDE_DIR})
-find_package(SDL2_TTF REQUIRED)
-include_directories(${SDL2_TTF_INCLUDE_DIR})
-find_package(SDL2_MIXER REQUIRED)
-include_directories(${SDL2_MIXER_INCLUDE_DIR})
+if(DEFINED CMAKE_TOOLCHAIN_FILE)
+	message(STATUS "Using vcpkg toolchain file")
+  # For Windows: Prevent overriding the parent project's compiler/linker settings
+  set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+	# find_package(SDL2 CONFIG REQUIRED)
+	# find_package(sdl2-image CONFIG REQUIRED)
+	# find_package(sdl2-ttf CONFIG REQUIRED)
+	# find_package(sdl2-mixer CONFIG REQUIRED)
+	# find_package(box2d CONFIG REQUIRED)
+  # find_package(OpenGL REQUIRED)
+  # find_package(GLEW REQUIRED)
+  # find_package(glm CONFIG REQUIRED)
+  # find_package(pugixml CONFIG REQUIRED)
+else()
+	message(STATUS "Using CMake find modules")
+	# find_package(SDL2 REQUIRED)
+	# find_package(SDL2_image REQUIRED)
+	# find_package(SDL2_ttf REQUIRED)
+	# find_package(SDL2_mixer REQUIRED)
+	# include_directories(${SDL2_MIXER_INCLUDE_DIR})
+	# find_package(box2d CONFIG REQUIRED)
+  # find_package(OpenGL REQUIRED)
+  # find_package(GLEW CONFIG REQUIRED)
+  # set(glm_DIR "C:/Users/castillo_a/source/repos/glm/cmake/glm")
+  # find_package(glm CONFIG REQUIRED)
+  # find_package(pugixml CONFIG REQUIRED)
+endif()
 
-add_executable(	KUGE main.cpp 
-								sdl2_wrappers/sdl2_audio
-								sdl2_wrappers/sdl2_font
-								sdl2_wrappers/sdl2_music
-								sdl2_wrappers/sdl2_renderer
-								sdl2_wrappers/sdl2_sound
-								sdl2_wrappers/sdl2_texture
-								sdl2_wrappers/sdl2_timer
-								sdl2_wrappers/sdl2_window
-								sources/event_bus
-								sources/event
-								sources/game
-								sources/input_system
-								sources/output_system
-								sources/system )
-target_link_libraries(KUGE ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${SDL2_TTF_LIBRARY} ${SDL2_MIXER_LIBRARY})
-target_include_directories(KUGE PUBLIC "${KUGE_SOURCE_DIR}/headers")
-install(TARGETS KUGE RUNTIME DESTINATION ${BIN_DIR})
+add_subdirectory(src)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

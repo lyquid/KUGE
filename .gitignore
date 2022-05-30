@@ -553,4 +553,9 @@ MigrationBackup/
 # cmake build folder
 build/
 
+# vscode folder
+.vscode/
+
+gitflow_cheatsheet.md
+
 # End of https://www.toptal.com/developers/gitignore/api/c,git,c++,linux,macos,windows,codeblocks,visualstudio,visualstudiocode,cmake
