@@ -1,5 +1,6 @@
 add_executable(KUGE
   ../main.cpp
+  component.cpp
   entity_manager.cpp
 )
 target_compile_features(KUGE PUBLIC cxx_std_17)

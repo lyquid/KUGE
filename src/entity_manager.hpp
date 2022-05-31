@@ -1,13 +1,14 @@
 #ifndef KUGE_ENTITY_MANAGER_HPP_
 #define KUGE_ENTITY_MANAGER_HPP_
 
+#include <cstdint>
 #include <queue>
 
 namespace kuge {
 
 class EntityManager {
 
-  using EntityID = unsigned long long;
+  using EntityID = std::uint64_t;
   using IDsQueue = std::queue<EntityID>;
 
  public:
