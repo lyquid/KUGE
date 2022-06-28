@@ -6,7 +6,7 @@ endif()
 
 project(
   KUGE
-  VERSION 0.1.0
+  VERSION 0.1
   DESCRIPTION "Ketepincho's Unbelievable(Useless) Game Engine"
   LANGUAGES CXX
 )
@@ -15,7 +15,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 # Set an output directory for our binaries
-set(BIN_DIR ${KUGE_SOURCE_DIR}/bin)
+# set(BIN_DIR ${KUGE_SOURCE_DIR}/bin)
 
 # Let's nicely support folders in IDEs
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -38,33 +38,8 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   endif()
 endif()
 
-if(DEFINED CMAKE_TOOLCHAIN_FILE)
-	message(STATUS "Using vcpkg toolchain file")
-  # For Windows: Prevent overriding the parent project's compiler/linker settings
-  set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-	# find_package(SDL2 CONFIG REQUIRED)
-	# find_package(sdl2-image CONFIG REQUIRED)
-	# find_package(sdl2-ttf CONFIG REQUIRED)
-	# find_package(sdl2-mixer CONFIG REQUIRED)
-	# find_package(box2d CONFIG REQUIRED)
-  # find_package(OpenGL REQUIRED)
-  # find_package(GLEW REQUIRED)
-  # find_package(glm CONFIG REQUIRED)
-  # find_package(pugixml CONFIG REQUIRED)
-else()
-	message(STATUS "Using CMake find modules")
-	# find_package(SDL2 REQUIRED)
-	# find_package(SDL2_image REQUIRED)
-	# find_package(SDL2_ttf REQUIRED)
-	# find_package(SDL2_mixer REQUIRED)
-	# include_directories(${SDL2_MIXER_INCLUDE_DIR})
-	# find_package(box2d CONFIG REQUIRED)
-  # find_package(OpenGL REQUIRED)
-  # find_package(GLEW CONFIG REQUIRED)
-  # set(glm_DIR "C:/Users/castillo_a/source/repos/glm/cmake/glm")
-  # find_package(glm CONFIG REQUIRED)
-  # find_package(pugixml CONFIG REQUIRED)
-endif()
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 add_subdirectory(src)
 
