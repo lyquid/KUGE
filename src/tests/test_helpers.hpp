@@ -22,8 +22,8 @@ struct TransformComponent {
 };
 
 struct RigidBodyComponent {
-	float velocity {300000.f};
-	Vec2 acceleration {3.14f, 34.f};
+	float speed {300000.f};
+	Vec2 velocity {3.14f, 34.f};
 };
 
 struct RenderComponent {
@@ -38,8 +38,8 @@ class PhysicsSystem: public ECS::System {
       auto rigidB {manager.component<RigidBodyComponent>(entity)};
       auto transf {manager.component<TransformComponent>(entity)};
       transf.position = {
-        transf.position.x * rigidB.velocity * rigidB.acceleration.x + gravity.g.x * delta_time,
-        transf.position.y * rigidB.velocity * rigidB.acceleration.y + gravity.g.y * delta_time
+        transf.position.x * rigidB.speed * rigidB.velocity.x + gravity.g.x * delta_time,
+        transf.position.y * rigidB.speed * rigidB.velocity.y + gravity.g.y * delta_time
       };
     }
   }
